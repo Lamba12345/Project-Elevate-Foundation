@@ -1,0 +1,19 @@
+/* Programs Page */
+.prog-detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+.prog-detail-reverse { direction: rtl; }
+.prog-detail-reverse > * { direction: ltr; }
+.prog-detail-img img { border-radius: var(--radius-lg); width: 100%; object-fit: cover; max-height: 460px; }
+.prog-tagline { font-size: 1.1rem; font-weight: 600; color: var(--primary); margin: 8px 0 18px; }
+.prog-detail-text p { margin-bottom: 10px; }
+.prog-metrics-row { display: flex; gap: 24px; margin: 28px 0; }
+.prog-metric { background: var(--bg-section); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 18px 22px; text-align: center; flex: 1; }
+.pm-num { display: block; font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 900; color: var(--primary); }
+.pm-label { font-size: .78rem; color: var(--text-light); margin-top: 4px; display: block; }
+.prog-goals h4 { margin-bottom: 12px; }
+.goal-item .ip-label { font-size: .85rem; color: var(--text-mid); }
+.cta-simple { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); padding: 80px 0; }
+.cta-simple-content { text-align: center; color: #fff; }
+.cta-simple-content h2 { color: #fff; margin-bottom: 12px; }
+.cta-simple-content p { color: rgba(255,255,255,.8); }
+@media (max-width: 1024px) { .prog-detail-grid { grid-template-columns: 1fr; gap: 40px; } .prog-detail-reverse { direction: ltr; } .prog-metrics-row { flex-wrap: wrap; } }
+@media (max-width: 600px) { .prog-metrics-row { flex-direction: column; gap: 12px; } .prog-metric { width: 100%; } }

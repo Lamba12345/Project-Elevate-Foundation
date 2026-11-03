@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Contact Us — Project Elevate Foundation</title>
+  <meta name="description" content="Get in touch with Project Elevate Foundation. We'd love to hear from you — whether you're a donor, partner, volunteer, or media contact." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/contact.css" />
+  <link rel="stylesheet" href="assets/css/inline-editor.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+</head>
+<body data-page="contact">
+
+  <nav id="navbar" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <img src="assets/images/logo-icon-transparent.png" alt="Project Elevate Foundation Logo" />
+        </div>
+        <div class="nav-logo-text"><div class="brand">Project Elevate</div><div class="sub">Foundation</div></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+        <li><a href="contact.html" class="active">Contact</a></li>
+        <li><a href="donate.html" class="nav-donate">Donate 💛</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="index.html">Home</a><a href="about.html">About</a>
+    <a href="programs.html">Programs</a><a href="blog.html">Blog</a>
+    <a href="volunteer.html">Volunteer</a><a href="contact.html" class="active">Contact</a>
+    <a href="donate.html" class="nav-donate">Donate 💛</a>
+  </nav>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Contact</span></div>
+      <h1>Get in Touch</h1>
+      <p>We'd love to hear from you. Reach out and let's create change together.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <div class="contact-layout">
+        <!-- Info -->
+        <div class="contact-info reveal">
+          <h3>Let's Connect</h3>
+          <p style="margin-bottom:28px">Whether you're a donor, partner, volunteer, or journalist — we welcome every conversation.</p>
+          <div class="contact-cards">
+            <div class="contact-card" id="cc-office">
+              <div class="cc-icon">📍</div>
+              <div><h4>Head Office</h4><p>Kwame Nkrumah Avenue<br />Accra, Ghana</p></div>
+            </div>
+            <div class="contact-card" id="cc-phone">
+              <div class="cc-icon">📞</div>
+              <div><h4>Phone</h4><p>+233 50 456 3447<br />Mon–Fri, 8am–5pm GMT</p></div>
+            </div>
+            <div class="contact-card" id="cc-email">
+              <div class="cc-icon">✉️</div>
+              <div><h4>Email</h4><p>info@projectelevatefoundation.org<br />partnerships@projectelevatefoundation.org</p></div>
+            </div>
+          </div>
+          <div class="social-connect">
+            <h4>Follow Us</h4>
+            <div class="social-links" style="margin-top:12px">
+              <a href="#" aria-label="Facebook" id="c-fb">f</a>
+              <a href="#" aria-label="Twitter" id="c-tw">𝕏</a>
+              <a href="#" aria-label="Instagram" id="c-ig">📷</a>
+              <a href="#" aria-label="LinkedIn" id="c-li">in</a>
+            </div>
+          </div>
+        </div>
+        <!-- Form -->
+        <div class="contact-form-wrap reveal" style="transition-delay:.15s">
+          <form id="contact-form" novalidate>
+            <h3 style="margin-bottom:20px">Send a Message</h3>
+            <div class="form-row">
+              <div class="form-group"><label for="c-name">Full Name *</label><input type="text" id="c-name" name="name" placeholder="Jane Doe" required /></div>
+              <div class="form-group"><label for="c-email">Email Address *</label><input type="email" id="c-email" name="email" placeholder="jane@example.com" required /></div>
+            </div>
+            <div class="form-group"><label for="c-subject">Subject *</label><input type="text" id="c-subject" name="subject" placeholder="How can we help?" required /></div>
+            <div class="form-group">
+              <label for="c-dept">Department</label>
+              <select id="c-dept" name="department">
+                <option value="general">General Enquiry</option>
+                <option value="donations">Donations &amp; Funding</option>
+                <option value="partnerships">Partnerships</option>
+                <option value="volunteer">Volunteering</option>
+                <option value="media">Media &amp; Press</option>
+              </select>
+            </div>
+            <div class="form-group"><label for="c-message">Message *</label><textarea id="c-message" name="message" placeholder="Tell us more..." required></textarea></div>
+            <div class="form-success">✅ Your message has been sent! We'll reply within 2 business days.</div>
+            <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center" id="contact-submit-btn">Send Message →</button>
+          </form>
+        </div>
+      </div>
+      <!-- Map placeholder -->
+      <div class="map-wrap reveal" style="margin-top:60px">
+        <div class="map-placeholder">
+          <span>📍 Accra, Ghana — Our Global Headquarters</span>
+          <p>Kwame Nkrumah Avenue, Accra, Ghana</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="margin-bottom:18px;display:inline-flex">
+            <div class="nav-logo-icon">
+              <img src="assets/images/logo-icon-transparent.png" alt="Project Elevate Foundation Logo" />
+            </div>
+            <div class="nav-logo-text"><div class="brand" style="color:#fff">Project Elevate</div><div class="sub" style="color:rgba(255,255,255,.5)">Foundation</div></div>
+          </a>
+          <p>Empowering communities and transforming lives since 2026.</p>
+        </div>
+        <div class="footer-col"><h4>Quick Links</h4><ul>
+          <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li><li><a href="donate.html">Donate</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Programs</h4><ul>
+          <li><a href="programs.html#education">Elevate Learn</a></li>
+          <li><a href="programs.html#community">Elevate Roots</a></li>
+          <li><a href="programs.html#women">Elevate Her</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Contact</h4>
+          <div class="footer-contact-item"><span class="icon">📍</span><span>Kwame Nkrumah Avenue, Accra, Ghana</span></div>
+          <div class="footer-contact-item"><span class="icon">📞</span><span>+233 50 456 3447</span></div>
+          <div class="footer-contact-item"><span class="icon">✉️</span><span>info@projectelevatefoundation.org</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Project Elevate Foundation. All rights reserved.</span>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="admin.html">Admin</a><a href="javascript:void(0)" class="footer-edit-link" id="footer-edit-link">✏️ Edit Website</a></div>
+      </div>
+    </div>
+  </footer>
+  <button id="scroll-top" aria-label="Scroll to top">↑</button>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/inline-editor.js"></script>
+</body>
+</html>

@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Donate — Project Elevate Foundation</title>
+  <meta name="description" content="Make a secure donation to Project Elevate Foundation and help us transform lives through education, healthcare, and community development." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/donate.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+</head>
+<body data-page="donate">
+
+  <nav id="navbar" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <img src="assets/images/logo-icon-transparent.png" alt="Project Elevate Foundation Logo" />
+        </div>
+        <div class="nav-logo-text">
+          <div class="brand">Project Elevate</div>
+          <div class="sub">Foundation</div>
+        </div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="blog.html">Blog</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="donate.html" class="nav-donate active">Donate 💛</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="index.html">Home</a><a href="about.html">About</a>
+    <a href="programs.html">Programs</a><a href="blog.html">Blog</a>
+    <a href="volunteer.html">Volunteer</a><a href="contact.html">Contact</a>
+    <a href="donate.html" class="nav-donate active">Donate 💛</a>
+  </nav>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Donate</span></div>
+      <h1>Make a Difference Today</h1>
+      <p>Every contribution, big or small, directly funds life-changing programs in our communities.</p>
+    </div>
+  </div>
+
+  <!-- Donate Section -->
+  <section class="section">
+    <div class="container">
+      <div class="donate-layout">
+        <!-- Form -->
+        <div class="donate-form-wrap reveal">
+          <div class="donate-form-card">
+            <h3>Your Donation</h3>
+            <p style="margin-bottom:24px;font-size:.92rem">Choose an amount or enter a custom gift.</p>
+            <form id="donate-form" novalidate>
+              <!-- Frequency -->
+              <div class="freq-toggle" role="group" aria-label="Donation frequency">
+                <button type="button" class="freq-btn active" data-freq="one-time" id="freq-once">One-time</button>
+                <button type="button" class="freq-btn" data-freq="monthly" id="freq-monthly">Monthly</button>
+                <button type="button" class="freq-btn" data-freq="annually" id="freq-annual">Annually</button>
+              </div>
+              <!-- Amount presets -->
+              <div class="amount-grid" role="group" aria-label="Preset amounts in Cedis">
+                <button type="button" class="amount-btn" data-amount="50" id="amt-50">GH₵50</button>
+                <button type="button" class="amount-btn active" data-amount="100" id="amt-100">GH₵100</button>
+                <button type="button" class="amount-btn" data-amount="250" id="amt-250">GH₵250</button>
+                <button type="button" class="amount-btn" data-amount="500" id="amt-500">GH₵500</button>
+                <button type="button" class="amount-btn" data-amount="1000" id="amt-1000">GH₵1,000</button>
+                <button type="button" class="amount-btn" data-amount="2500" id="amt-2500">GH₵2,500</button>
+              </div>
+              <!-- Custom amount -->
+              <div class="form-group">
+                <label for="custom-amount">Or enter custom amount in Cedis (GH₵)</label>
+                <div class="amount-input-wrap">
+                  <span class="currency-sign">GH₵</span>
+                  <input type="number" id="custom-amount" name="amount" min="5" placeholder="0.00" value="100" />
+                </div>
+              </div>
+              <!-- Impact callout -->
+              <div class="impact-callout" id="impact-callout">
+                💡 <span id="impact-text">GH₵100 provides a full month of school supplies and textbooks for one child.</span>
+              </div>
+              <!-- Payment Method Selection in Cedis -->
+              <div class="form-group" style="margin-top:22px">
+                <label>Select Payment Method (All in Ghana Cedis - GH₵)</label>
+                <div class="payment-methods-grid" role="radiogroup" aria-label="Payment Method">
+                  <div class="payment-method-card active" data-method="momo" id="pm-momo" tabindex="0" role="radio" aria-checked="true">
+                    <span class="pm-icon">📱</span>
+                    <span class="pm-name">Mobile Money</span>
+                    <span class="pm-sub">MTN, Telecel, AT</span>
+                  </div>
+                  <div class="payment-method-card" data-method="card" id="pm-card" tabindex="0" role="radio" aria-checked="false">
+                    <span class="pm-icon">💳</span>
+                    <span class="pm-name">Card Payment</span>
+                    <span class="pm-sub">Visa, Mastercard, Gh-Link</span>
+                  </div>
+                  <div class="payment-method-card" data-method="bank" id="pm-bank" tabindex="0" role="radio" aria-checked="false">
+                    <span class="pm-icon">🏦</span>
+                    <span class="pm-name">Bank Transfer</span>
+                    <span class="pm-sub">Direct GhIPSS / Instant</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Mobile Money Fields -->
+              <div id="momo-fields" class="payment-details-box">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="momo-network">Mobile Money Network</label>
+                    <select id="momo-network" name="momo_network">
+                      <option value="mtn">MTN Mobile Money (MoMo)</option>
+                      <option value="telecel">Telecel Cash (Vodafone)</option>
+                      <option value="at">AT Money (AirtelTigo)</option>
+                    </select>
+                  </div>
+                  <div class="form-group">
+                    <label for="momo-number">MoMo Number (Ghana)</label>
+                    <input type="tel" id="momo-number" name="momo_number" placeholder="024 123 4567" />
+                  </div>
+                </div>
+                <div class="momo-note">📲 You will receive an instant prompt on your phone in Ghana Cedis (GH₵) to enter your PIN and authorize the transaction.</div>
+              </div>
+
+              <!-- Card Fields -->
+              <div id="card-fields" class="payment-details-box" style="display:none">
+                <div class="form-group">
+                  <label for="card-number">Card Number (Billed in GH₵)</label>
+                  <input type="text" id="card-number" name="card_number" placeholder="4123 4567 8901 2345" maxlength="19" />
+                </div>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="card-expiry">Expiry Date</label>
+                    <input type="text" id="card-expiry" name="card_expiry" placeholder="MM/YY" maxlength="5" />
+                  </div>
+                  <div class="form-group">
+                    <label for="card-cvv">CVV</label>
+                    <input type="password" id="card-cvv" name="card_cvv" placeholder="123" maxlength="4" />
+                  </div>
+                </div>
+              </div>
+
+              <!-- Bank Transfer Details -->
+              <div id="bank-fields" class="payment-details-box" style="display:none">
+                <div class="bank-details-card">
+                  <div class="bd-row"><span>Bank:</span><strong>Ecobank Ghana / GCB Bank</strong></div>
+                  <div class="bd-row"><span>Account Name:</span><strong>Project Elevate Foundation</strong></div>
+                  <div class="bd-row"><span>Account Number:</span><strong>1441 0023 9081 22</strong></div>
+                  <div class="bd-row"><span>Branch:</span><strong>Kwame Nkrumah Avenue, Accra</strong></div>
+                  <div class="bd-row"><span>Currency:</span><strong>Ghana Cedis (GH₵)</strong></div>
+                </div>
+              </div>
+
+              <!-- Dedicated to -->
+              <div class="form-group">
+                <label for="donate-name">Your Full Name</label>
+                <input type="text" id="donate-name" name="name" placeholder="Jane Doe" required />
+              </div>
+              <div class="form-group">
+                <label for="donate-email">Email Address</label>
+                <input type="email" id="donate-email" name="email" placeholder="jane@example.com" required />
+              </div>
+              <div class="form-group">
+                <label for="donate-program">Designate to Program (optional)</label>
+                <select id="donate-program" name="program">
+                  <option value="">Where most needed</option>
+                  <option value="education">Elevate Learn (Education)</option>
+                  <option value="community">Elevate Roots (Community)</option>
+                  <option value="women">Elevate Her (Women Empowerment)</option>
+                  <option value="health">Health Initiative</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="donate-message">Dedication Message (optional)</label>
+                <textarea id="donate-message" name="message" placeholder="In honour of..."></textarea>
+              </div>
+              <div class="form-success">✅ Medaase! Your donation in Ghana Cedis has been received. A receipt will be emailed to you.</div>
+              <button type="submit" class="btn btn-accent btn-lg" style="width:100%;justify-content:center" id="donate-submit-btn">
+                💛 Donate GH₵<span id="btn-amount">100</span> Now
+              </button>
+              <div class="secure-note">🔒 Secured by 256-bit SSL encryption. All payments processed in Ghana Cedis (GH₵).</div>
+            </form>
+          </div>
+        </div>
+        <!-- Side info -->
+        <div class="donate-info reveal" style="transition-delay:.15s">
+          <div class="info-card">
+            <h4>Why Donate?</h4>
+            <ul class="donate-why">
+              <li>✅ 92 pesewas of every Cedi goes directly to programs</li>
+              <li>✅ Tax-deductible registered Ghanaian foundation</li>
+              <li>✅ Receive transparent quarterly impact reports</li>
+              <li>✅ Join 12,000+ local &amp; global supporters</li>
+            </ul>
+          </div>
+          <div class="impact-card-side">
+            <h4>Your Impact (GH₵)</h4>
+            <div class="impact-row"><span class="impact-amt">GH₵50</span><span>Provides 1 week of meals for a child</span></div>
+            <div class="impact-row"><span class="impact-amt">GH₵100</span><span>Supplies school materials for a month</span></div>
+            <div class="impact-row"><span class="impact-amt">GH₵250</span><span>Funds a health check-up for a family</span></div>
+            <div class="impact-row"><span class="impact-amt">GH₵500</span><span>Sponsors a woman's skills training session</span></div>
+            <div class="impact-row"><span class="impact-amt">GH₵1,000</span><span>Covers a full scholarship for one term</span></div>
+            <div class="impact-row"><span class="impact-amt">GH₵2,500</span><span>Installs a clean water unit for a community</span></div>
+          </div>
+          <div class="info-card" style="margin-top:24px">
+            <h4>Annual Goal Progress</h4>
+            <div class="ip-label" style="font-size:.88rem;color:var(--text-light);margin-bottom:8px"><span>GH₵1.8M raised</span><span>GH₵2.5M goal</span></div>
+            <div class="progress-bar"><div class="progress-fill" data-width="73%" style="width:73%"></div></div>
+            <p style="font-size:.82rem;margin-top:8px;color:var(--text-light)">73% of our 2026 fundraising goal reached</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="margin-bottom:18px;display:inline-flex">
+            <div class="nav-logo-icon">
+              <img src="assets/images/logo-icon-transparent.png" alt="Project Elevate Foundation Logo" />
+            </div>
+            <div class="nav-logo-text"><div class="brand" style="color:#fff">Project Elevate</div><div class="sub" style="color:rgba(255,255,255,.5)">Foundation</div></div>
+          </a>
+          <p>Empowering communities and transforming lives through education, healthcare, and sustainable development since 2026.</p>
+        </div>
+        <div class="footer-col"><h4>Quick Links</h4><ul>
+          <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li><li><a href="contact.html">Contact</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Programs</h4><ul>
+          <li><a href="programs.html#education">Elevate Learn</a></li>
+          <li><a href="programs.html#community">Elevate Roots</a></li>
+          <li><a href="programs.html#women">Elevate Her</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Contact</h4>
+          <div class="footer-contact-item"><span class="icon">📍</span><span>Kwame Nkrumah Avenue, Accra, Ghana</span></div>
+          <div class="footer-contact-item"><span class="icon">📞</span><span>+233 50 456 3447</span></div>
+          <div class="footer-contact-item"><span class="icon">✉️</span><span>info@projectelevatefoundation.org</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Project Elevate Foundation. All rights reserved.</span>
+        <div class="footer-bottom-links"><a href="#">Privacy Policy</a><a href="admin.html">Admin</a></div>
+      </div>
+    </div>
+  </footer>
+  <button id="scroll-top" aria-label="Scroll to top">↑</button>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/donate.js"></script>
+</body>
+</html>

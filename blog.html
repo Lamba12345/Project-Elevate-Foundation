@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>News &amp; Blog — Project Elevate Foundation</title>
+  <meta name="description" content="Read the latest news, field reports, and impact stories from Project Elevate Foundation's programs around the world." />
+  <link rel="stylesheet" href="assets/css/style.css" />
+  <link rel="stylesheet" href="assets/css/blog.css" />
+  <link rel="stylesheet" href="assets/css/inline-editor.css" />
+  <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+</head>
+<body data-page="blog">
+
+  <nav id="navbar" aria-label="Main navigation">
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">
+        <div class="nav-logo-icon">
+          <img src="assets/images/logo-icon-transparent.png" alt="Project Elevate Foundation Logo" />
+        </div>
+        <div class="nav-logo-text"><div class="brand">Project Elevate</div><div class="sub">Foundation</div></div>
+      </a>
+      <ul class="nav-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="programs.html">Programs</a></li>
+        <li><a href="blog.html" class="active">Blog</a></li>
+        <li><a href="volunteer.html">Volunteer</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="donate.html" class="nav-donate">Donate 💛</a></li>
+      </ul>
+      <button class="hamburger" id="hamburger" aria-label="Open menu" aria-expanded="false"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+  <nav class="mobile-nav" id="mobile-nav">
+    <a href="index.html">Home</a><a href="about.html">About</a>
+    <a href="programs.html">Programs</a><a href="blog.html" class="active">Blog</a>
+    <a href="volunteer.html">Volunteer</a><a href="contact.html">Contact</a>
+    <a href="donate.html" class="nav-donate">Donate 💛</a>
+  </nav>
+
+  <div class="page-hero">
+    <div class="container">
+      <div class="breadcrumb"><a href="index.html">Home</a><span>›</span><span>Blog</span></div>
+      <h1>News &amp; Stories</h1>
+      <p>Field reports, volunteer journeys, and community impact stories from around the world.</p>
+    </div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <!-- Filter -->
+      <div class="blog-filters reveal">
+        <button class="filter-btn active" data-filter="all" id="filter-all">All</button>
+        <button class="filter-btn" data-filter="education" id="filter-edu">Education</button>
+        <button class="filter-btn" data-filter="community" id="filter-comm">Community</button>
+        <button class="filter-btn" data-filter="empowerment" id="filter-emp">Empowerment</button>
+        <button class="filter-btn" data-filter="health" id="filter-health">Health</button>
+        <button class="filter-btn" data-filter="volunteer" id="filter-vol">Volunteer Stories</button>
+      </div>
+
+      <!-- Featured post -->
+      <article class="blog-featured card reveal" id="blog-featured">
+        <div class="bf-img">
+          <img src="assets/images/program_education.jpg" alt="Children at school" />
+          <span class="tag">Education</span>
+        </div>
+        <div class="bf-content">
+          <div class="blog-meta"><span>📅 October 28, 2026</span><span>·</span><span>5 min read</span><span>·</span><span>by Amara Diallo</span></div>
+          <h2><a href="#">New Scholarship Programme Reaches 500 Students in Rural Kenya</a></h2>
+          <p>In a landmark achievement for Project Elevate Foundation's Elevate Learn programme, we're proud to announce that our latest scholarship initiative has now reached 500 deserving students across rural communities in Kenya's Rift Valley region. These students — many of whom had never set foot in a classroom before — are now accessing quality education, digital tools, and mentorship that will shape their futures forever...</p>
+          <a href="#" class="btn btn-primary btn-sm" id="featured-read-btn">Read Full Story →</a>
+        </div>
+      </article>
+
+      <!-- Blog grid -->
+      <div class="blog-main-grid">
+        <div class="blog-posts">
+          <article class="blog-post-card card reveal" data-category="community" id="post-1">
+            <div class="bpc-img"><img src="assets/images/program_community.jpg" alt="Community borehole" /><span class="tag">Community</span></div>
+            <div class="bpc-body">
+              <div class="blog-meta"><span>📅 Oct 15, 2026</span><span>·</span><span>4 min read</span></div>
+              <h3><a href="#">Clean Water Initiative Completes 50th Borehole in Northern Ghana</a></h3>
+              <p>A landmark milestone — 50,000 people now have reliable access to safe drinking water thanks to our Elevate Roots programme...</p>
+              <a href="#" class="blog-read-more">Read More →</a>
+            </div>
+          </article>
+          <article class="blog-post-card card reveal" data-category="empowerment" id="post-2" style="transition-delay:.08s">
+            <div class="bpc-img"><img src="assets/images/program_women.jpg" alt="Women graduates" /><span class="tag tag-accent">Empowerment</span></div>
+            <div class="bpc-body">
+              <div class="blog-meta"><span>📅 Oct 2, 2026</span><span>·</span><span>6 min read</span></div>
+              <h3><a href="#">Elevate Her Celebrates 5th Anniversary with 200 New Graduates</a></h3>
+              <p>Five years of transforming lives — over 2,000 women now run their own businesses, thanks to our vocational training programme...</p>
+              <a href="#" class="blog-read-more">Read More →</a>
+            </div>
+          </article>
+          <article class="blog-post-card card reveal" data-category="education" id="post-3" style="transition-delay:.16s">
+            <div class="bpc-img"><img src="assets/images/program_education.jpg" alt="Digital classroom" /><span class="tag">Education</span></div>
+            <div class="bpc-body">
+              <div class="blog-meta"><span>📅 Sep 18, 2026</span><span>·</span><span>3 min read</span></div>
+              <h3><a href="#">Digital Literacy Programme Provides 1,000 Tablets to Remote Schools</a></h3>
+              <p>Bridging the digital divide — our tech-in-schools initiative now covers 42 schools across Uganda, Rwanda, and Ethiopia...</p>
+              <a href="#" class="blog-read-more">Read More →</a>
+            </div>
+          </article>
+          <article class="blog-post-card card reveal" data-category="volunteer" id="post-4">
+            <div class="bpc-img"><img src="assets/images/program_community.jpg" alt="Volunteers" /><span class="tag">Volunteer Story</span></div>
+            <div class="bpc-body">
+              <div class="blog-meta"><span>📅 Sep 5, 2026</span><span>·</span><span>7 min read</span></div>
+              <h3><a href="#">From London to Lagos: My 6 Months Volunteering with Elevate Her</a></h3>
+              <p>Volunteer Sarah Chen shares her transformative journey teaching entrepreneurship to women in southern Nigeria...</p>
+              <a href="#" class="blog-read-more">Read More →</a>
+            </div>
+          </article>
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="blog-sidebar">
+          <div class="sidebar-widget reveal">
+            <h4>Subscribe for Updates</h4>
+            <form id="newsletter-form" class="sidebar-subscribe" novalidate>
+              <input type="email" name="email" placeholder="Your email address" required />
+              <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Subscribe →</button>
+            </form>
+          </div>
+          <div class="sidebar-widget reveal" style="transition-delay:.1s">
+            <h4>Categories</h4>
+            <ul class="cat-list">
+              <li><a href="#">Education <span>12</span></a></li>
+              <li><a href="#">Community <span>9</span></a></li>
+              <li><a href="#">Women Empowerment <span>8</span></a></li>
+              <li><a href="#">Health <span>5</span></a></li>
+              <li><a href="#">Volunteer Stories <span>7</span></a></li>
+              <li><a href="#">Environment <span>4</span></a></li>
+            </ul>
+          </div>
+          <div class="sidebar-widget reveal" style="transition-delay:.2s">
+            <h4>Make an Impact</h4>
+            <div style="background:linear-gradient(135deg,var(--primary-dark),var(--primary));border-radius:var(--radius-md);padding:24px;color:#fff">
+              <p style="color:rgba(255,255,255,.85);margin-bottom:16px">Your donation funds the stories you read here. Join 12,000+ donors making a difference.</p>
+              <a href="donate.html" class="btn btn-accent" style="width:100%;justify-content:center" id="sidebar-donate-btn">Donate Today 💛</a>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer id="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <a href="index.html" class="nav-logo" style="margin-bottom:18px;display:inline-flex">
+            <div class="nav-logo-icon">
+              <img src="assets/images/logo-icon-transparent.png" alt="Project Elevate Foundation Logo" />
+            </div>
+            <div class="nav-logo-text"><div class="brand" style="color:#fff">Project Elevate</div><div class="sub" style="color:rgba(255,255,255,.5)">Foundation</div></div>
+          </a>
+          <p>Empowering communities and transforming lives since 2026.</p>
+        </div>
+        <div class="footer-col"><h4>Quick Links</h4><ul>
+          <li><a href="index.html">Home</a></li><li><a href="about.html">About</a></li>
+          <li><a href="programs.html">Programs</a></li><li><a href="donate.html">Donate</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Programs</h4><ul>
+          <li><a href="programs.html#education">Elevate Learn</a></li>
+          <li><a href="programs.html#community">Elevate Roots</a></li>
+          <li><a href="programs.html#women">Elevate Her</a></li>
+        </ul></div>
+        <div class="footer-col"><h4>Contact</h4>
+          <div class="footer-contact-item"><span class="icon">📍</span><span>Kwame Nkrumah Avenue, Accra, Ghana</span></div>
+          <div class="footer-contact-item"><span class="icon">📞</span><span>+233 50 456 3447</span></div>
+          <div class="footer-contact-item"><span class="icon">✉️</span><span>info@projectelevatefoundation.org</span></div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>© 2026 Project Elevate Foundation. All rights reserved.</span>
+        <div class="footer-bottom-links"><a href="#">Privacy</a><a href="admin.html">Admin</a><a href="javascript:void(0)" class="footer-edit-link" id="footer-edit-link">✏️ Edit Website</a></div>
+      </div>
+    </div>
+  </footer>
+  <button id="scroll-top" aria-label="Scroll to top">↑</button>
+  <script src="assets/js/main.js"></script>
+  <script src="assets/js/blog.js"></script>
+  <script src="assets/js/inline-editor.js"></script>
+</body>
+</html>

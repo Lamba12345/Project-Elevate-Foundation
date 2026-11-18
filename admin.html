@@ -1,156 +1,865 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Admin Panel — Project Elevate Foundation</title>
+  <title>Management Dashboard — Project Elevate Foundation</title>
   <meta name="robots" content="noindex, nofollow" />
-  <link rel="stylesheet" href="assets/css/style.css" />
-  <link rel="stylesheet" href="assets/css/admin.css" />
   <link rel="icon" type="image/png" href="assets/images/favicon.png" />
+  <link rel="stylesheet" href="assets/css/dashboard.css" />
 </head>
-<body data-page="admin">
 
-  <!-- Admin Sidebar -->
-  <div class="admin-layout">
-    <aside class="admin-sidebar" id="admin-sidebar">
-      <div class="admin-logo">
-        <div class="nav-logo-icon">
-          <img src="assets/images/logo-icon-transparent.png" alt="Project Elevate Foundation Logo" />
-        </div>
-        <div>
-          <div style="font-weight:800;color:#fff;font-size:.95rem">Elevate Admin</div>
-          <div style="font-size:.7rem;color:rgba(255,255,255,.5)">Management Panel</div>
+<body class="dashboard-body">
+
+  <div class="dash-layout">
+    <!-- Sidebar -->
+    <aside class="dash-sidebar" id="dash-sidebar">
+      <div class="dash-sidebar-header">
+        <img src="assets/images/logo-icon-transparent.png" alt="Logo" />
+        <div class="dash-sidebar-brand">
+          <div class="name">Project Elevate</div>
+          <div class="sub">Management Portal</div>
         </div>
       </div>
-      <nav class="admin-nav">
-        <a href="#dashboard" class="admin-nav-link active" data-tab="dashboard" id="nav-dashboard">📊 Dashboard</a>
-        <a href="#contacts" class="admin-nav-link" data-tab="contacts" id="nav-contacts">✉️ Contact Messages</a>
-        <a href="#volunteers" class="admin-nav-link" data-tab="volunteers" id="nav-volunteers">🤝 Volunteer Applications</a>
-        <a href="#donations" class="admin-nav-link" data-tab="donations" id="nav-donations">💛 Donations</a>
-        <a href="#newsletter" class="admin-nav-link" data-tab="newsletter" id="nav-newsletter">📧 Newsletter Subscribers</a>
+
+      <div class="dash-user-card">
+        <div class="dash-user-info">
+          <div class="dash-user-email" id="dash-user-email">Loading...</div>
+          <span class="dash-user-role-badge" id="dash-user-role">Verifying...</span>
+        </div>
+      </div>
+
+      <nav class="dash-nav">
+        <!-- Super Admin Section -->
+        <div class="super-admin-only">
+          <div class="dash-nav-section-title">Administration</div>
+          <a href="#overview" class="dash-nav-link active" data-tab="overview">
+            <span>📊</span><span>Overview</span>
+          </a>
+          <a href="#pending" class="dash-nav-link" data-tab="pending">
+            <span>⏳</span><span>Pending Approvals</span>
+            <span class="dash-nav-badge alert-badge" id="pending-count-badge" style="display:none">0</span>
+          </a>
+        </div>
+
+        <!-- Website Pages Section (Shared by Super Admin & Content Manager) -->
+        <div class="dash-nav-section-title">Website Pages (Edit Content)</div>
+        <a href="#page-home" class="dash-nav-link" data-tab="page-home">
+          <span>🏠</span><span>Home Page</span>
+        </a>
+        <a href="#page-about" class="dash-nav-link" data-tab="page-about">
+          <span>📖</span><span>About Us</span>
+        </a>
+        <a href="#page-programs" class="dash-nav-link" data-tab="page-programs">
+          <span>🎯</span><span>Programs</span>
+        </a>
+        <a href="#page-blog" class="dash-nav-link" data-tab="page-blog">
+          <span>📰</span><span>Blog &amp; News</span>
+        </a>
+        <a href="#page-volunteer" class="dash-nav-link" data-tab="page-volunteer">
+          <span>🤝</span><span>Volunteer</span>
+        </a>
+        <a href="#page-contact" class="dash-nav-link" data-tab="page-contact">
+          <span>📞</span><span>Contact</span>
+        </a>
+        <a href="#page-donate" class="dash-nav-link" data-tab="page-donate">
+          <span>💛</span><span>Donate</span>
+        </a>
+
+        <!-- Public Engagement Section (Shared: Contact Messages accessible to managers too) -->
+        <div class="dash-nav-section-title">Visitor Inquiries</div>
+        <a href="#contacts" class="dash-nav-link" data-tab="contacts">
+          <span>✉️</span><span>Contact Messages</span>
+          <span class="dash-nav-badge" id="contacts-count-badge" style="display:none;background:#0284c7;color:#fff;">0</span>
+        </a>
+
+        <!-- Super Admin Settings Section -->
+        <div class="super-admin-only">
+          <div class="dash-nav-section-title">Applications &amp; Finance</div>
+          <a href="#volunteers" class="dash-nav-link" data-tab="volunteers">
+            <span>🤝</span><span>Volunteer Applications</span>
+          </a>
+          <a href="#donations" class="dash-nav-link" data-tab="donations">
+            <span>💛</span><span>Donations (Paystack)</span>
+          </a>
+          <a href="#newsletter" class="dash-nav-link" data-tab="newsletter">
+            <span>📫</span><span>Newsletter Subscribers</span>
+          </a>
+
+          <div class="dash-nav-section-title">Access &amp; Security</div>
+          <a href="#managers" class="dash-nav-link" data-tab="managers">
+            <span>👥</span><span>Manager Accounts</span>
+          </a>
+          <a href="#logs" class="dash-nav-link" data-tab="logs">
+            <span>📜</span><span>Activity Logs</span>
+          </a>
+        </div>
       </nav>
-      <div class="admin-sidebar-footer">
-        <a href="index.html" class="btn btn-outline btn-sm" style="width:100%;justify-content:center">← Back to Website</a>
+
+      <div class="dash-sidebar-footer">
+        <button class="btn-signout" id="btn-signout">
+          <span>🚪</span><span>Sign Out</span>
+        </button>
       </div>
     </aside>
 
     <!-- Main Content -->
-    <main class="admin-main">
-      <header class="admin-header">
-        <div>
-          <h1 style="font-size:1.4rem">Admin Panel</h1>
-          <p style="font-size:.85rem;color:var(--text-light);margin:0">Project Elevate Foundation — Database Overview</p>
+    <main class="dash-main">
+      <header class="dash-topbar">
+        <div class="dash-topbar-left">
+          <button class="btn-mobile-menu" id="btn-mobile-menu" aria-label="Toggle navigation">☰</button>
+          <h1 class="dash-page-title" id="dash-current-title">Overview</h1>
         </div>
-        <div class="admin-header-actions">
-          <span class="db-badge">🗄️ SQLite Connected</span>
-          <span class="db-badge success">✅ Spring Boot API</span>
+        <div class="dash-topbar-actions">
+          <button class="btn-dash-primary" onclick="window.openNewSubmissionModal()">
+            <span>➕</span><span>Add Content</span>
+          </button>
+          <a href="index.html" target="_blank" class="btn-dash-outline">
+            <span>🌐</span><span>Live Website</span>
+          </a>
         </div>
       </header>
 
-      <!-- Dashboard Tab -->
-      <div class="admin-tab active" id="tab-dashboard">
-        <div class="admin-stats-grid">
-          <div class="admin-stat-card" id="asc-contacts">
-            <div class="asc-icon">✉️</div>
-            <div class="asc-info"><div class="asc-num">24</div><div class="asc-label">Total Messages</div></div>
-            <span class="badge-new">3 New</span>
+      <div class="dash-content">
+        <!-- 1. OVERVIEW TAB (Super Admin) -->
+        <div class="dash-tab-pane active" id="tab-overview">
+          <div class="dash-stats-grid">
+            <div class="dash-stat-card">
+              <div class="dash-stat-icon amber">⏳</div>
+              <div class="dash-stat-info">
+                <div class="num" id="stat-pending-count">0</div>
+                <div class="label">Pending Approvals</div>
+              </div>
+            </div>
+            <div class="dash-stat-card">
+              <div class="dash-stat-icon green">✅</div>
+              <div class="dash-stat-info">
+                <div class="num" id="stat-approved-count">0</div>
+                <div class="label">Approved &amp; Live</div>
+              </div>
+            </div>
+            <div class="dash-stat-card">
+              <div class="dash-stat-icon purple">🔄</div>
+              <div class="dash-stat-info">
+                <div class="num" id="stat-revision-count">0</div>
+                <div class="label">Revision Requests</div>
+              </div>
+            </div>
+            <div class="dash-stat-card">
+              <div class="dash-stat-icon blue">📁</div>
+              <div class="dash-stat-info">
+                <div class="num" id="stat-total-submissions">0</div>
+                <div class="label">Total Submissions</div>
+              </div>
+            </div>
           </div>
-          <div class="admin-stat-card" id="asc-volunteers">
-            <div class="asc-icon">🤝</div>
-            <div class="asc-info"><div class="asc-num">87</div><div class="asc-label">Applications</div></div>
-            <span class="badge-new">12 New</span>
-          </div>
-          <div class="admin-stat-card" id="asc-donations">
-            <div class="asc-icon">💛</div>
-            <div class="asc-info"><div class="asc-num">GH₵48,320</div><div class="asc-label">Total Donations</div></div>
-            <span class="badge-new">+GH₵1,200</span>
-          </div>
-          <div class="admin-stat-card" id="asc-newsletter">
-            <div class="asc-icon">📧</div>
-            <div class="asc-info"><div class="asc-num">1,204</div><div class="asc-label">Subscribers</div></div>
-            <span class="badge-new">+56</span>
-          </div>
-        </div>
-        <div class="admin-api-note">
-          <h4>🔌 Spring Boot + SQLite Integration</h4>
-          <p>This admin panel connects to the following REST API endpoints provided by the Spring Boot backend:</p>
-          <div class="api-endpoints">
-            <div class="api-row"><span class="method get">GET</span><code>/api/contacts</code><span>Retrieve all contact messages</span></div>
-            <div class="api-row"><span class="method post">POST</span><code>/api/contact</code><span>Save new contact message</span></div>
-            <div class="api-row"><span class="method get">GET</span><code>/api/volunteers</code><span>Retrieve all applications</span></div>
-            <div class="api-row"><span class="method post">POST</span><code>/api/volunteer</code><span>Save volunteer application</span></div>
-            <div class="api-row"><span class="method get">GET</span><code>/api/donations</code><span>Retrieve all donations</span></div>
-            <div class="api-row"><span class="method post">POST</span><code>/api/donate</code><span>Save donation record</span></div>
-            <div class="api-row"><span class="method get">GET</span><code>/api/newsletter</code><span>Retrieve all subscribers</span></div>
-            <div class="api-row"><span class="method post">POST</span><code>/api/newsletter</code><span>Subscribe email</span></div>
-          </div>
-          <p style="margin-top:12px;font-size:.85rem">All data is persisted in <strong>SQLite</strong> via Spring Data JPA with Hibernate. See the <code>backend/</code> folder for the Spring Boot project structure and database schema.</p>
-        </div>
-      </div>
 
-      <!-- Contacts Tab -->
-      <div class="admin-tab" id="tab-contacts">
-        <div class="tab-header">
-          <h2>Contact Messages</h2>
-          <button class="btn btn-primary btn-sm" id="export-contacts-btn">Export CSV</button>
-        </div>
-        <div class="table-wrap">
-          <table class="admin-table" id="contacts-table">
-            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Subject</th><th>Department</th><th>Date</th><th>Status</th></tr></thead>
-            <tbody id="contacts-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Volunteers Tab -->
-      <div class="admin-tab" id="tab-volunteers">
-        <div class="tab-header">
-          <h2>Volunteer Applications</h2>
-          <button class="btn btn-primary btn-sm" id="export-volunteers-btn">Export CSV</button>
-        </div>
-        <div class="table-wrap">
-          <table class="admin-table" id="volunteers-table">
-            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Country</th><th>Role</th><th>Availability</th><th>Date</th><th>Status</th></tr></thead>
-            <tbody id="volunteers-tbody"></tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- Donations Tab -->
-      <div class="admin-tab" id="tab-donations">
-        <div class="tab-header">
-          <h2>Donation Records</h2>
-          <div class="donation-total-wrap">
-            <span class="donation-total-label">Total Raised:</span>
-            <span class="donation-total-num" id="donation-total">GH₵48,320</span>
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3>⏳ Pending Approval Queue</h3>
+              <span style="font-size:0.8rem;color:#64748b;">Submissions waiting for your review</span>
+            </div>
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Title &amp; Summary</th>
+                    <th>Category</th>
+                    <th>Submitted By</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="pending-tbody">
+                  <tr>
+                    <td colspan="6" class="empty-state">Loading pending queue...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
-          <button class="btn btn-primary btn-sm" id="export-donations-btn">Export CSV</button>
         </div>
-        <div class="table-wrap">
-          <table class="admin-table" id="donations-table">
-            <thead><tr><th>#</th><th>Name</th><th>Email</th><th>Amount</th><th>Frequency</th><th>Program</th><th>Date</th></tr></thead>
-            <tbody id="donations-tbody"></tbody>
-          </table>
-        </div>
-      </div>
 
-      <!-- Newsletter Tab -->
-      <div class="admin-tab" id="tab-newsletter">
-        <div class="tab-header">
-          <h2>Newsletter Subscribers</h2>
-          <button class="btn btn-primary btn-sm" id="export-newsletter-btn">Export CSV</button>
+        <!-- 2. PENDING TAB (Super Admin dedicated queue) -->
+        <div class="dash-tab-pane" id="tab-pending">
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3>Submissions Requiring Approval</h3>
+            </div>
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Category</th>
+                    <th>Submitted By</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="pending-dedicated-tbody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        <div class="table-wrap">
-          <table class="admin-table" id="newsletter-table">
-            <thead><tr><th>#</th><th>Email</th><th>Subscribed On</th><th>Status</th></tr></thead>
-            <tbody id="newsletter-tbody"></tbody>
-          </table>
+
+        <!-- 3.1 PAGE CONTENT: HOME PAGE -->
+        <div class="dash-tab-pane" id="tab-page-home">
+          <div class="section-header-row">
+            <div>
+              <h2>🏠 Home Page Content</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">Manage hero banners, spotlight announcements, vision highlights, and featured cards on the Home page.</p>
+            </div>
+            <button class="btn-dash-primary" onclick="window.openNewPageContentModal('home')">➕ Add Content to Home</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Title &amp; Summary</th>
+                    <th>Section Target</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="page-home-tbody"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
+
+        <!-- 3.2 PAGE CONTENT: ABOUT US -->
+        <div class="dash-tab-pane" id="tab-page-about">
+          <div class="section-header-row">
+            <div>
+              <h2>📖 About Us Content Management</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">
+                Manage all sections, headings, paragraphs, statements, and images displayed on the public About Us page.
+              </p>
+            </div>
+            <button class="btn-dash-primary" onclick="window.openNewAboutContentModal()">
+              <span>➕</span><span>Add New About Us Content</span>
+            </button>
+          </div>
+
+          <!-- Section Filter & Search Toolbar -->
+          <div class="dash-card" style="margin-bottom:16px;padding:14px 18px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+              <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;" id="about-section-filters">
+                <button type="button" class="btn-filter-pill active" onclick="window.filterAboutSection('all')">All Sections</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Hero & Introduction')">Hero</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Our Story')">Story &amp; History</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Vision & Mission')">Vision &amp; Mission</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Core Values')">Core Values</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Target Beneficiaries')">Beneficiaries</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Strategic Focus Areas')">5 Pillars</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Leadership')">Leadership Team</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Milestones Timeline')">Timeline</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterAboutSection('Custom Section')">Custom Sections</button>
+              </div>
+              <div style="position:relative;min-width:240px;">
+                <input type="text" id="about-search-input" class="form-control-dash" placeholder="🔍 Search About Us content..." oninput="window.searchAboutContent(this.value)" style="padding-left:12px;height:36px;font-size:0.85rem;" />
+              </div>
+            </div>
+          </div>
+
+          <!-- Content Table -->
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th style="width:68px;">Media</th>
+                    <th>Content Title &amp; Summary</th>
+                    <th>Section Placement</th>
+                    <th>Last Updated</th>
+                    <th>Status</th>
+                    <th style="text-align:right;">Management Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="page-about-tbody">
+                  <tr>
+                    <td colspan="6" class="empty-state">Loading About Us content...</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3.3 PAGE CONTENT: PROGRAMS -->
+        <div class="dash-tab-pane" id="tab-page-programs">
+          <div class="section-header-row">
+            <div>
+              <h2>🎯 Programs Page Content</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">Manage the 5 Strategic Focus Areas (Pillars), initiatives, curriculum highlights, and outreach milestones.</p>
+            </div>
+            <button class="btn-dash-primary" onclick="window.openNewPageContentModal('programs')">➕ Add Program Content</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Program Title &amp; Summary</th>
+                    <th>Pillar / Focus Area</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="page-programs-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3.4 PAGE CONTENT: BLOG & NEWS -->
+        <div class="dash-tab-pane" id="tab-page-blog">
+          <div class="section-header-row">
+            <div>
+              <h2>📰 Blog &amp; News Content</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">Manage blog stories, publications, press releases, community news, and author insights.</p>
+            </div>
+            <button class="btn-dash-primary" onclick="window.openNewPageContentModal('blog')">➕ Add Blog Post / News</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Article Title &amp; Excerpt</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="page-blog-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3.5 PAGE CONTENT: VOLUNTEER -->
+        <div class="dash-tab-pane" id="tab-page-volunteer">
+          <div class="section-header-row">
+            <div>
+              <h2>🤝 Volunteer Page Content</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">Manage volunteer calls, mentorship opportunities, required skill sets, and volunteer testimonials.</p>
+            </div>
+            <button class="btn-dash-primary" onclick="window.openNewPageContentModal('volunteer')">➕ Add Volunteer Content</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Title &amp; Summary</th>
+                    <th>Role / Area</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="page-volunteer-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3.6 PAGE CONTENT: CONTACT -->
+        <div class="dash-tab-pane" id="tab-page-contact">
+          <div class="section-header-row">
+            <div>
+              <h2>📞 Contact Page Content</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">Manage office announcements, partnership notes, regional contact details, and FAQs.</p>
+            </div>
+            <button class="btn-dash-primary" onclick="window.openNewPageContentModal('contact')">➕ Add Contact Content</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Title &amp; Summary</th>
+                    <th>Section Target</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="page-contact-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3.7 PAGE CONTENT: DONATE -->
+        <div class="dash-tab-pane" id="tab-page-donate">
+          <div class="section-header-row">
+            <div>
+              <h2>💛 Donate Page Content</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">Manage fundraising appeal highlights, bank transfer guidelines, donor transparency notes, and impact tiers.</p>
+            </div>
+            <button class="btn-dash-primary" onclick="window.openNewPageContentModal('donate')">➕ Add Donate Content</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Title &amp; Summary</th>
+                    <th>Campaign / Section</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="page-donate-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- 10. MANAGERS TAB (Super Admin only) -->
+        <div class="dash-tab-pane" id="tab-managers">
+          <div class="dash-card" style="margin-bottom:24px;">
+            <div class="dash-card-header">
+              <h3>Authorize New Content Manager</h3>
+            </div>
+            <div style="padding:22px;">
+              <form id="invite-manager-form"
+                style="display:grid;grid-template-columns:1fr 1fr auto;gap:14px;align-items:end;">
+                <div class="form-group-dash" style="margin:0;">
+                  <label for="invite-name">Manager Full Name</label>
+                  <input type="text" id="invite-name" class="form-control-dash" placeholder="e.g. Jane Davidson"
+                    required />
+                </div>
+                <div class="form-group-dash" style="margin:0;">
+                  <label for="invite-email">Manager Email Address</label>
+                  <input type="email" id="invite-email" class="form-control-dash"
+                    placeholder="manager@projectelevatefoundation.org" required />
+                </div>
+                <button type="submit" class="btn-dash-primary" style="height:42px;">
+                  <span>➕ Authorize Account</span>
+                </button>
+              </form>
+              <p class="form-hint">Authorized managers can log in at <code>/team-login</code>. Only one content manager
+                account is permitted at a time.</p>
+            </div>
+          </div>
+
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3>Team Accounts &amp; Access Status</h3>
+            </div>
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Full Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="managers-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 11. ACTIVITY LOGS (Super Admin only) -->
+        <div class="dash-tab-pane" id="tab-logs">
+          <div class="dash-card">
+            <div class="dash-card-header">
+              <h3>Security &amp; Content Audit Trail</h3>
+              <span style="font-size:0.8rem;color:#64748b;">All actions performed by managers and admins</span>
+            </div>
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>Timestamp</th>
+                    <th>User</th>
+                    <th>Action</th>
+                    <th>Details</th>
+                  </tr>
+                </thead>
+                <tbody id="logs-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 12. PUBLIC ENGAGEMENT TABS (Super Admin only) -->
+        <div class="dash-tab-pane" id="tab-contacts">
+          <div class="section-header-row">
+            <div>
+              <h2>✉️ Visitor Contact Messages</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">Messages submitted by visitors through the public Contact page form.</p>
+            </div>
+            <button class="btn-dash-outline"
+              onclick="window.exportCsv(window.state?.contacts, 'contact_messages.csv')">📥 Export CSV</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Sender</th>
+                    <th>Subject</th>
+                    <th>Message Preview</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="contacts-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-tab-pane" id="tab-volunteers">
+          <div class="section-header-row">
+            <h2>Volunteer Applications</h2>
+            <button class="btn-dash-outline"
+              onclick="window.exportCsv(window.state?.volunteers, 'volunteer_applications.csv')">Export CSV</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Applicant</th>
+                    <th>Role / Country</th>
+                    <th>Availability</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="volunteers-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-tab-pane" id="tab-donations">
+          <div class="section-header-row">
+            <h2>Donations &amp; Paystack Transactions</h2>
+            <button class="btn-dash-outline" onclick="window.exportCsv(window.state?.donations, 'donations.csv')">Export
+              CSV</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Donor</th>
+                    <th>Amount</th>
+                    <th>Designation</th>
+                    <th>Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="donations-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="dash-tab-pane" id="tab-newsletter">
+          <div class="section-header-row">
+            <h2>Newsletter Subscribers</h2>
+            <button class="btn-dash-outline"
+              onclick="window.exportCsv(window.state?.subscribers, 'newsletter_subscribers.csv')">Export CSV</button>
+          </div>
+          <div class="dash-card">
+            <div class="dash-table-wrap">
+              <table class="dash-table">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>Email</th>
+                    <th>Subscribed Date</th>
+                  </tr>
+                </thead>
+                <tbody id="subscribers-tbody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
       </div>
     </main>
   </div>
 
-  <script src="assets/js/admin.js"></script>
+  <!-- ── MODALS ─────────────────────────────────────────────── -->
+
+  <!-- 1. Submission Create / Edit Modal -->
+  <div class="dash-modal-backdrop" id="submission-modal">
+    <div class="dash-modal-card">
+      <div class="dash-modal-header">
+        <h3 id="sub-modal-title">Create Content Submission</h3>
+        <button class="btn-modal-close" onclick="window.closeSubmissionModal()">&times;</button>
+      </div>
+      <form id="submission-form" onsubmit="event.preventDefault();">
+        <div class="dash-modal-body">
+          <div id="sub-feedback-box"
+            style="display:none;background:#fef2f2;border:1px solid #fecaca;padding:12px;border-radius:8px;margin-bottom:16px;">
+            <strong style="color:#b91c1c;font-size:0.85rem;">Correction Requested by Super Admin:</strong>
+            <p id="sub-feedback-text" style="margin:4px 0 0;font-size:0.85rem;color:#7f1d1d;"></p>
+          </div>
+
+          <div class="form-group-dash">
+            <label for="sub-content-type">Content Category *</label>
+            <select id="sub-content-type" class="form-control-dash" required>
+              <option value="activity">🎯 Activity &amp; Programme</option>
+              <option value="event">📅 Upcoming Event</option>
+              <option value="news_announcement">📢 News &amp; Announcement</option>
+              <option value="publication">📚 Book &amp; Publication</option>
+              <option value="gallery">🖼️ Photo &amp; Video Gallery</option>
+              <option value="website_content">🌐 Website Content Update</option>
+            </select>
+          </div>
+
+          <div class="form-group-dash">
+            <label for="sub-title">Title / Headline *</label>
+            <input type="text" id="sub-title" class="form-control-dash" required
+              placeholder="Enter clear, descriptive title..." />
+          </div>
+
+          
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
+            <div class="form-group-dash">
+              <label for="sub-target-page">Target Website Page *</label>
+              <select id="sub-target-page" class="form-control-dash">
+                <option value="general">Global / All Pages</option>
+                <option value="home">🏠 Home Page (index.html)</option>
+                <option value="about">📖 About Us (about.html)</option>
+                <option value="programs">🎯 Programs (programs.html)</option>
+                <option value="blog">📰 Blog &amp; News (blog.html)</option>
+                <option value="volunteer">🤝 Volunteer (volunteer.html)</option>
+                <option value="contact">📞 Contact (contact.html)</option>
+                <option value="donate">💛 Donate (donate.html)</option>
+              </select>
+            </div>
+            <div class="form-group-dash">
+              <label for="sub-target-section">Section / Placement Target</label>
+              <input type="text" id="sub-target-section" class="form-control-dash" placeholder="e.g. Hero, Highlight, Pillar, Story, FAQ" />
+            </div>
+          </div>
+
+          <div id="sub-type-specific-fields"></div>
+
+          <div class="form-group-dash">
+            <label for="sub-summary">Summary / Excerpt (Short preview)</label>
+            <textarea id="sub-summary" class="form-control-dash" rows="2"
+              placeholder="Brief summary of this item..."></textarea>
+          </div>
+
+          <div class="form-group-dash">
+            <label for="sub-content">Full Details / Story / Body</label>
+            <textarea id="sub-content" class="form-control-dash" rows="4"
+              placeholder="Detailed content description..."></textarea>
+          </div>
+
+          <div class="form-group-dash">
+            <label>Upload Media File (Image, Book Cover, Banner or PDF)</label>
+            <div style="display:flex;gap:10px;align-items:center;">
+              <input type="file" id="sub-file-input" accept="image/*,video/mp4,application/pdf" style="display:none;" />
+              <button type="button" class="btn-dash-outline" onclick="document.getElementById('sub-file-input').click()">
+                📁 Choose File from Device
+              </button>
+              <span id="sub-upload-status" style="font-size:0.8rem;color:#64748b;">No file chosen</span>
+            </div>
+          </div>
+
+          <div class="form-group-dash">
+            <label for="sub-image-url">Image / Cover / Media URL</label>
+            <input type="text" id="sub-image-url" class="form-control-dash"
+              placeholder="assets/images/... or https://..." />
+            <div class="form-hint">Populated automatically when you upload a file, or you can paste an image URL.</div>
+            
+            <div class="form-group-dash" style="margin-top:10px;">
+              <label for="sub-image-caption">Image Caption (Optional)</label>
+              <input type="text" id="sub-image-caption" class="form-control-dash" placeholder="e.g. Community members attending our 2026 skills workshop..." />
+            </div>
+            <div id="sub-image-preview-wrap" style="margin-top:10px;display:none;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                <span style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;">Live Preview (Aspect-Ratio Preserved)</span>
+                <button type="button" class="btn-action-sm btn-action-delete" onclick="window.clearModalImage()">Remove Image</button>
+              </div>
+              <img id="sub-image-preview" src="" alt="Preview" style="max-height:140px;border-radius:8px;border:1px solid #e2e8f0;object-fit:cover;" />
+            </div>
+          </div>
+        </div>
+        <div class="dash-modal-footer">
+          <button type="button" class="btn-dash-outline" onclick="window.closeSubmissionModal()">Cancel</button>
+          <button type="button" class="btn-dash-outline" onclick="window.handleSubmissionSave('DRAFT')">Save
+            Draft</button>
+          <button type="button" class="btn-dash-primary" onclick="window.handleSubmissionSave('APPROVED')">
+            <span>🚀 Publish Live to Website</span>
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- 2. Submission View Modal -->
+  <div class="dash-modal-backdrop" id="view-modal">
+    <div class="dash-modal-card">
+      <div class="dash-modal-header">
+        <h3 id="view-title">Submission Details</h3>
+        <button class="btn-modal-close" onclick="window.closeViewModal()">&times;</button>
+      </div>
+      <div class="dash-modal-body">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px;">
+          <span id="view-status"></span>
+          <span id="view-type" style="font-weight:700;font-size:0.8rem;color:#64748b;"></span>
+          <span style="font-size:0.75rem;color:#94a3b8;margin-left:auto;" id="view-date"></span>
+        </div>
+
+        <div style="font-size:0.85rem;color:#475569;margin-bottom:14px;">
+          <strong>Submitted By:</strong> <span id="view-author"></span>
+        </div>
+
+        <div id="view-feedback-wrap"
+          style="display:none;background:#fef2f2;border:1px solid #fecaca;padding:12px;border-radius:8px;margin-bottom:16px;">
+          <strong style="color:#b91c1c;font-size:0.85rem;">Review Feedback:</strong>
+          <p id="view-feedback" style="margin:4px 0 0;font-size:0.85rem;color:#7f1d1d;"></p>
+        </div>
+
+        <img id="view-image" src="" alt="Submission media"
+          style="display:none;max-height:220px;width:100%;object-fit:cover;border-radius:8px;margin-bottom:16px;" />
+
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;">Summary</label>
+          <p id="view-summary" style="margin:4px 0;font-size:0.9rem;line-height:1.5;"></p>
+        </div>
+
+        <div>
+          <label style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;">Content
+            Details</label>
+          <p id="view-content" style="margin:4px 0;font-size:0.9rem;line-height:1.6;white-space:pre-wrap;"></p>
+        </div>
+      </div>
+      <div class="dash-modal-footer">
+        <button type="button" class="btn-dash-primary" onclick="window.closeViewModal()">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Request Revision Modal -->
+  <div class="dash-modal-backdrop" id="revision-modal">
+    <div class="dash-modal-card" style="max-width:480px;">
+      <div class="dash-modal-header">
+        <h3>Request Corrections</h3>
+        <button class="btn-modal-close" onclick="window.closeRevisionModal()">&times;</button>
+      </div>
+      <div class="dash-modal-body">
+        <p style="font-size:0.88rem;color:#64748b;margin:0 0 16px;">
+          Specify the changes or corrections required from the Content Manager before this item can be approved.
+        </p>
+        <div class="form-group-dash">
+          <label for="revision-feedback-input">Instructions for Manager *</label>
+          <textarea id="revision-feedback-input" class="form-control-dash" rows="4"
+            placeholder="e.g. Please update the event date and add a higher resolution cover image..."
+            required></textarea>
+        </div>
+      </div>
+      <div class="dash-modal-footer">
+        <button type="button" class="btn-dash-outline" onclick="window.closeRevisionModal()">Cancel</button>
+        <button type="button" class="btn-dash-primary" style="background:#f59e0b;"
+          onclick="window.submitRevisionRequest()">
+          Send Revision Request
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. Reject Submission Modal -->
+  <div class="dash-modal-backdrop" id="reject-modal">
+    <div class="dash-modal-card" style="max-width:480px;">
+      <div class="dash-modal-header">
+        <h3>Reject Content Submission</h3>
+        <button class="btn-modal-close" onclick="window.closeRejectModal()">&times;</button>
+      </div>
+      <div class="dash-modal-body">
+        <p style="font-size:0.88rem;color:#64748b;margin:0 0 16px;">
+          Provide an optional reason why this content cannot be published. Rejected content is permanently kept off the
+          public website.
+        </p>
+        <div class="form-group-dash">
+          <label for="reject-reason-input">Reason for Rejection</label>
+          <textarea id="reject-reason-input" class="form-control-dash" rows="3"
+            placeholder="e.g. Duplicate event or does not align with foundation guidelines..."></textarea>
+        </div>
+      </div>
+      <div class="dash-modal-footer">
+        <button type="button" class="btn-dash-outline" onclick="window.closeRejectModal()">Cancel</button>
+        <button type="button" class="btn-dash-primary" style="background:#ef4444;" onclick="window.submitRejection()">
+          Confirm Rejection
+        </button>
+      </div>
+    </div>
+  </div>
+
+  
+  <!-- 5. Contact Message View Modal -->
+  <div class="dash-modal-backdrop" id="contact-view-modal">
+    <div class="dash-modal-card">
+      <div class="dash-modal-header">
+        <h3>Contact Message Details</h3>
+        <button class="btn-modal-close" onclick="window.closeContactModal()">&times;</button>
+      </div>
+      <div class="dash-modal-body">
+        <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;border-bottom:1px solid #e2e8f0;padding-bottom:12px;">
+          <div>
+            <h4 id="cm-name" style="margin:0 0 4px;font-size:1.1rem;color:#0f172a;"></h4>
+            <div id="cm-email-phone" style="font-size:0.85rem;color:#64748b;"></div>
+          </div>
+          <div style="text-align:right;">
+            <span id="cm-status" class="status-pill status-approved">📩 Received</span>
+            <div id="cm-date" style="font-size:0.75rem;color:#94a3b8;margin-top:4px;"></div>
+          </div>
+        </div>
+
+        <div style="margin-bottom:14px;">
+          <label style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;">Subject</label>
+          <div id="cm-subject" style="font-weight:700;font-size:1rem;color:#1e293b;margin-top:2px;"></div>
+        </div>
+
+        <div>
+          <label style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;">Message</label>
+          <div id="cm-message" style="margin-top:6px;font-size:0.92rem;line-height:1.6;color:#334155;background:#f8fafc;padding:14px;border-radius:8px;border:1px solid #e2e8f0;white-space:pre-wrap;"></div>
+        </div>
+      </div>
+      <div class="dash-modal-footer">
+        <button type="button" class="btn-dash-outline" onclick="window.closeContactModal()">Close</button>
+        <a id="cm-reply-btn" href="#" class="btn-dash-primary" target="_blank">
+          <span>✉️ Reply by Email</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="assets/js/supabase.js"></script>
+  <script src="assets/js/dashboard.js"></script>
 </body>
+
 </html>

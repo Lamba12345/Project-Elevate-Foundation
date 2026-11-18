@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team Portal — Project Elevate Foundation</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="icon" type="image/png" href="../assets/images/favicon.png" />
+  <link rel="stylesheet" href="../assets/css/team-login.css" />
+</head>
+<body class="team-login-body">
+
+  <div class="team-login-container">
+    <div class="team-login-header">
+      <div class="team-login-logo">
+        <img src="../assets/images/logo-icon-transparent.png" alt="Project Elevate Foundation Logo" />
+        <div class="team-login-brand">
+          <div class="brand-name">Project Elevate</div>
+          <div class="brand-sub">Foundation</div>
+        </div>
+      </div>
+      <h1>Private Team Portal</h1>
+      <p>Authorized access for management and administration</p>
+    </div>
+
+    <div class="team-login-body-content">
+      <div id="team-login-alert" class="team-alert" role="alert"></div>
+
+      <form id="team-login-form" class="team-login-form" novalidate>
+        <div class="form-group">
+          <label for="team-email">Authorized Email Address</label>
+          <input type="email" id="team-email" name="email" placeholder="name@projectelevatefoundation.org" required autocomplete="username" />
+        </div>
+
+        <div class="form-group">
+          <label for="team-password">Password</label>
+          <input type="password" id="team-password" name="password" placeholder="••••••••••••" required autocomplete="current-password" />
+        </div>
+
+        <div class="form-row-actions">
+          <button type="button" class="forgot-link" id="open-forgot-btn">Forgot Password?</button>
+        </div>
+
+        <button type="submit" class="btn-team-submit" id="team-submit-btn">
+          <span>Sign In to Dashboard</span>
+          <span style="font-size:1.1rem;line-height:1">→</span>
+        </button>
+      </form>
+    </div>
+
+    <div class="team-login-footer">
+      <span>🔒 Project Elevate Foundation · Secure Role-Based Management</span>
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="team-modal-backdrop" id="forgot-modal" role="dialog" aria-modal="true" aria-labelledby="forgot-title">
+    <div class="team-modal-card">
+      <h2 id="forgot-title">Reset Your Password</h2>
+      <p>Enter your authorized email address and we'll send you a secure link to reset your account credentials.</p>
+
+      <div id="forgot-alert" class="team-alert" role="alert"></div>
+
+      <form id="forgot-form" class="team-login-form">
+        <div class="form-group">
+          <label for="forgot-email">Account Email</label>
+          <input type="email" id="forgot-email" required placeholder="name@projectelevatefoundation.org" />
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:20px;">
+          <button type="button" class="btn-team-submit" id="close-forgot-btn" style="background:#e2e8f0;color:#334155;">
+            Cancel
+          </button>
+          <button type="submit" class="btn-team-submit" id="forgot-submit-btn">
+            Send Reset Link
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Supabase SDK & Client -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="../assets/js/supabase.js"></script>
+  <script src="../assets/js/team-login.js"></script>
+</body>
+</html>
+

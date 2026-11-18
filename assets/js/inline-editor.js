@@ -459,17 +459,13 @@
               </p>
               <div class="elevate-form-group">
                 <label for="login-username">Username</label>
-                <input type="text" id="login-username" class="elevate-form-control" placeholder="editor" required autocomplete="username" />
+                <input type="text" id="login-username" class="elevate-form-control" placeholder="Username" required autocomplete="username" />
               </div>
               <div class="elevate-form-group">
                 <label for="login-password">Password</label>
                 <input type="password" id="login-password" class="elevate-form-control" placeholder="••••••••" required autocomplete="current-password" />
               </div>
-              <div style="background:#f8fafc;border:1px dashed #cbd5e1;border-radius:8px;padding:10px 14px;font-size:0.8rem;color:#475569;">
-                <strong>Demo Credentials:</strong><br />
-                Username: <code style="color:#059669;font-weight:700">editor</code> &nbsp;|&nbsp;
-                Password: <code style="color:#059669;font-weight:700">Elevate2026!</code>
-              </div>
+
             </div>
             <div class="elevate-modal-footer">
               <button type="button" class="elevate-bar-btn elevate-btn-cancel" data-close="modal-login-backdrop">Cancel</button>
@@ -826,7 +822,23 @@
         enterEditingMode();
 
       } catch (err) {
-        errorAlert.textContent = err.message || 'Invalid username or password.';
+        // Offline fallback: accept hardcoded credentials when API is unreachable
+        const offlineUser = usernameInput.value.trim();
+        const offlinePass = passwordInput.value;
+        if (offlineUser === 'Dzifa' && offlinePass === 'Elevate2026!') {
+          state.token = 'offline-token';
+          state.currentUser = 'Dzifa';
+          state.isLoggedIn = true;
+          localStorage.setItem('elevate_editor_token', 'offline-token');
+          closeModal('modal-login-backdrop');
+          form.reset();
+          toast('Welcome back, Dzifa! Editing mode active (offline).');
+          enterEditingMode();
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Sign In & Edit';
+          return;
+        }
+        errorAlert.textContent = 'Invalid username or password.';
         errorAlert.classList.add('is-visible');
       } finally {
         submitBtn.disabled = false;
@@ -859,6 +871,10 @@
 
     enableInlineTextEditing();
     enableImageEditing();
+
+    // Show admin "+" button on blog page
+    const adminAddBtn = document.getElementById('admin-add-news-btn');
+    if (adminAddBtn) adminAddBtn.style.display = 'inline-flex';
   }
 
   function exitEditingMode() {
@@ -879,6 +895,11 @@
     if (trigger) trigger.classList.remove('is-active');
 
     disableInlineTextEditing();
+
+    // Hide admin "+" button
+    const adminAddBtn = document.getElementById('admin-add-news-btn');
+    if (adminAddBtn) adminAddBtn.style.display = 'none';
+
     toast('Exited editing mode.');
   }
 

@@ -1,128 +1,254 @@
-// ============================================================
-// Admin Panel — Mock data display + Spring Boot API integration
-// ============================================================
+// Supabase-backed admin panel. Table access is enforced by database RLS.
 
-// Tab switching
-const navLinks = document.querySelectorAll('.admin-nav-link');
-const tabs     = document.querySelectorAll('.admin-tab');
+const supabaseClient = window.elevateSupabase;
+const authPanel = document.getElementById('admin-auth');
+const adminLayout = document.getElementById('admin-layout');
+const loginForm = document.getElementById('admin-login-form');
+const authError = document.getElementById('admin-auth-error');
+const dataMessage = document.getElementById('admin-data-message');
+const records = {
+  contacts: [],
+  volunteers: [],
+  donations: [],
+  subscribers: []
+};
 
-navLinks.forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    navLinks.forEach(l => l.classList.remove('active'));
-    tabs.forEach(t => t.classList.remove('active'));
+function showAuthError(message) {
+  authError.textContent = message;
+  authError.hidden = !message;
+}
+
+function setAuthenticated(visible) {
+  authPanel.hidden = visible;
+  adminLayout.hidden = !visible;
+}
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, character => ({
+    '&': '&amp;',
+    '<': '&lt;',
+    '>': '&gt;',
+    '"': '&quot;',
+    "'": '&#39;'
+  })[character]);
+}
+
+function formatDate(value) {
+  const date = new Date(value);
+  return Number.isNaN(date.getTime()) ? '' : date.toLocaleDateString();
+}
+
+function statusBadge(status) {
+  const value = String(status || 'pending');
+  const classes = {
+    new: 'status-new',
+    read: 'status-read',
+    pending: 'status-pending',
+    approved: 'status-approved',
+    paid: 'status-approved',
+    active: 'status-approved',
+    rejected: 'status-read'
+  };
+  return `<span class="status-badge ${classes[value] || ''}">${escapeHtml(value.charAt(0).toUpperCase() + value.slice(1))}</span>`;
+}
+
+function renderTable(elementId, rows, columns) {
+  const tbody = document.getElementById(elementId);
+  if (!tbody) return;
+  tbody.innerHTML = rows.map((row, index) => `
+    <tr>
+      <td>${index + 1}</td>
+      ${columns.map(column => `<td>${column(row)}</td>`).join('')}
+    </tr>`).join('');
+}
+
+function renderRecords() {
+  renderTable('contacts-tbody', records.contacts, [
+    row => escapeHtml(row.name),
+    row => escapeHtml(row.email),
+    row => escapeHtml(row.subject),
+    row => escapeHtml(row.department),
+    row => escapeHtml(formatDate(row.created_at)),
+    row => statusBadge(row.status)
+  ]);
+  renderTable('volunteers-tbody', records.volunteers, [
+    row => escapeHtml(`${row.first_name} ${row.last_name}`.trim()),
+    row => escapeHtml(row.email),
+    row => escapeHtml(row.country),
+    row => escapeHtml(row.role),
+    row => escapeHtml(row.availability),
+    row => escapeHtml(formatDate(row.created_at)),
+    row => statusBadge(row.status)
+  ]);
+  renderTable('donations-tbody', records.donations, [
+    row => escapeHtml(row.name),
+    row => escapeHtml(row.email),
+    row => `GH₵${Number(row.amount).toLocaleString()}`,
+    row => escapeHtml(row.frequency),
+    row => escapeHtml(row.program || 'Where most needed'),
+    row => `${escapeHtml(formatDate(row.created_at))} · ${statusBadge(row.payment_status)}`
+  ]);
+  renderTable('newsletter-tbody', records.subscribers, [
+    row => escapeHtml(row.email),
+    row => escapeHtml(formatDate(row.created_at)),
+    row => statusBadge(row.status)
+  ]);
+
+  document.getElementById('stat-contacts').textContent = records.contacts.length;
+  document.getElementById('stat-volunteers').textContent = records.volunteers.length;
+  document.getElementById('stat-donations').textContent = records.donations
+    .filter(row => row.payment_status === 'paid').length;
+  document.getElementById('stat-newsletter').textContent = records.subscribers.length;
+
+  const paidTotal = records.donations
+    .filter(row => row.payment_status === 'paid')
+    .reduce((sum, row) => sum + Number(row.amount), 0);
+  document.getElementById('donation-total').textContent =
+    `GH₵${paidTotal.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+}
+
+async function loadTable(tableName) {
+  const { data, error } = await supabaseClient
+    .from(tableName)
+    .select('*')
+    .order('created_at', { ascending: false })
+    .limit(500);
+  if (error) throw error;
+  return data || [];
+}
+
+async function loadAdminData() {
+  dataMessage.textContent = 'Loading records…';
+  const [contacts, volunteers, donations, subscribers] = await Promise.all([
+    loadTable('contact_messages'),
+    loadTable('volunteer_applications'),
+    loadTable('donations'),
+    loadTable('newsletter_subscribers')
+  ]);
+  records.contacts = contacts;
+  records.volunteers = volunteers;
+  records.donations = donations;
+  records.subscribers = subscribers;
+  renderRecords();
+  dataMessage.textContent = 'Records are current. Payment totals include confirmed payments only.';
+}
+
+function exportCsv(data, filename) {
+  if (!data.length) {
+    dataMessage.textContent = 'There are no records to export.';
+    return;
+  }
+  const headers = Object.keys(data[0]);
+  const csvValue = value => `"${String(value ?? '').replace(/"/g, '""')}"`;
+  const csv = [
+    headers.map(csvValue).join(','),
+    ...data.map(row => headers.map(header => csvValue(row[header])).join(','))
+  ].join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+document.querySelectorAll('.admin-nav-link').forEach(link => {
+  link.addEventListener('click', event => {
+    event.preventDefault();
+    document.querySelectorAll('.admin-nav-link').forEach(item => item.classList.remove('active'));
+    document.querySelectorAll('.admin-tab').forEach(tab => tab.classList.remove('active'));
     link.classList.add('active');
-    document.getElementById('tab-' + link.dataset.tab).classList.add('active');
+    document.getElementById(`tab-${link.dataset.tab}`).classList.add('active');
   });
 });
 
-// ── Mock data (replace with actual API calls in production) ──
-// In production, fetch from Spring Boot:
-// const res = await fetch('/api/contacts');
-// const data = await res.json();
+document.getElementById('export-contacts-btn').addEventListener('click', () =>
+  exportCsv(records.contacts, 'contacts.csv'));
+document.getElementById('export-volunteers-btn').addEventListener('click', () =>
+  exportCsv(records.volunteers, 'volunteer-applications.csv'));
+document.getElementById('export-donations-btn').addEventListener('click', () =>
+  exportCsv(records.donations, 'donations.csv'));
+document.getElementById('export-newsletter-btn').addEventListener('click', () =>
+  exportCsv(records.subscribers, 'newsletter-subscribers.csv'));
 
-const contacts = [
-  { id: 1, name: 'Sarah Johnson', email: 'sarah.j@email.com', subject: 'Partnership Inquiry', dept: 'Partnerships', date: '2026-10-30', status: 'new' },
-  { id: 2, name: 'Michael Chen', email: 'm.chen@corp.com', subject: 'Donation Query', dept: 'Donations', date: '2026-10-29', status: 'read' },
-  { id: 3, name: 'Amara Diallo', email: 'amara@example.com', subject: 'Volunteer Question', dept: 'Volunteer', date: '2026-10-28', status: 'new' },
-  { id: 4, name: 'Yuki Tanaka', email: 'yuki.t@press.com', subject: 'Media Interview Request', dept: 'Media', date: '2026-10-27', status: 'read' },
-  { id: 5, name: 'Omar Hassan', email: 'omar.h@email.com', subject: 'General Enquiry', dept: 'General', date: '2026-10-25', status: 'new' },
-];
+async function authorizeUser(session) {
+  setAuthenticated(false);
+  if (!session) {
+    showAuthError('');
+    return;
+  }
 
-const volunteers = [
-  { id: 1, name: 'Emily Rodriguez', email: 'emily.r@gmail.com', country: 'Spain', role: 'Education Facilitator', avail: 'Full-time', date: '2026-10-31', status: 'pending' },
-  { id: 2, name: 'David Okafor', email: 'd.okafor@email.com', country: 'Nigeria', role: 'Community Health Worker', avail: 'Part-time', date: '2026-10-30', status: 'approved' },
-  { id: 3, name: 'Laura Müller', email: 'laura.m@email.de', country: 'Germany', role: 'Digital Marketing', avail: 'Remote flexible', date: '2026-10-28', status: 'pending' },
-  { id: 4, name: 'James Kariuki Jr', email: 'james.k@email.ke', country: 'Kenya', role: 'Data Analyst', avail: 'Weekends', date: '2026-10-26', status: 'approved' },
-  { id: 5, name: 'Priya Sharma', email: 'p.sharma@email.in', country: 'India', role: 'Women\'s Programme Trainer', avail: 'Full-time', date: '2026-10-24', status: 'pending' },
-  { id: 6, name: 'Luca Ferreira', email: 'luca.f@email.br', country: 'Brazil', role: 'Environmental Specialist', avail: 'Part-time', date: '2026-10-22', status: 'approved' },
-];
+  try {
+    const { data, error } = await supabaseClient.rpc('is_admin');
+    if (error) throw error;
+    if (!data) {
+      await supabaseClient.auth.signOut();
+      showAuthError('This account is not authorized for the admin panel.');
+      return;
+    }
 
-const donations = [
-  { id: 1, name: 'Anonymous', email: '***@email.com', amount: 'GH₵500', freq: 'One-time', program: 'Where Most Needed', date: '2026-10-31' },
-  { id: 2, name: 'Bill & Sarah Thomson', email: 'b.thomson@corp.com', amount: 'GH₵250', freq: 'Monthly', program: 'Elevate Learn', date: '2026-10-30' },
-  { id: 3, name: 'Maria Gonzalez', email: 'm.gonzalez@email.es', amount: 'GH₵100', freq: 'One-time', program: 'Elevate Her', date: '2026-10-29' },
-  { id: 4, name: 'TechCorp Foundation', email: 'giving@techcorp.com', amount: 'GH₵5,000', freq: 'Annually', program: 'Elevate Roots', date: '2026-10-28' },
-  { id: 5, name: 'James Osei', email: 'j.osei@email.gh', amount: 'GH₵50', freq: 'Monthly', program: 'Health Initiative', date: '2026-10-27' },
-];
-
-const subscribers = [
-  { id: 1, email: 'sarah.j@email.com', date: '2026-10-31', status: 'active' },
-  { id: 2, email: 'm.chen@corp.com', date: '2026-10-30', status: 'active' },
-  { id: 3, email: 'amara@example.com', date: '2026-10-29', status: 'active' },
-  { id: 4, email: 'yuki.t@press.com', date: '2026-10-25', status: 'active' },
-  { id: 5, email: 'omar.h@email.com', date: '2026-10-20', status: 'active' },
-  { id: 6, email: 'emily.r@gmail.com', date: '2026-10-18', status: 'active' },
-];
-
-// ── Render tables ──────────────────────────────────────────
-function statusBadge(status) {
-  const map = { new: 'status-new', read: 'status-read', pending: 'status-pending', approved: 'status-approved', active: 'status-approved' };
-  return `<span class="status-badge ${map[status] || ''}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>`;
+    showAuthError('');
+    setAuthenticated(true);
+    await loadAdminData();
+  } catch (error) {
+    console.error('Unable to verify or load admin records:', error);
+    setAuthenticated(false);
+    showAuthError('Could not verify admin access. Check the Supabase setup and try again.');
+  }
 }
 
-function renderContacts() {
-  const tbody = document.getElementById('contacts-tbody');
-  if (!tbody) return;
-  tbody.innerHTML = contacts.map(r => `
-    <tr>
-      <td>${r.id}</td><td>${r.name}</td><td>${r.email}</td>
-      <td>${r.subject}</td><td>${r.dept}</td><td>${r.date}</td>
-      <td>${statusBadge(r.status)}</td>
-    </tr>`).join('');
+if (!supabaseClient) {
+  showAuthError('Supabase did not initialize. Check the connection settings and reload.');
+} else {
+  loginForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!loginForm.reportValidity()) return;
+
+    const button = document.getElementById('admin-login-btn');
+    button.disabled = true;
+    showAuthError('');
+    try {
+      const values = new FormData(loginForm);
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email: values.get('email'),
+        password: values.get('password')
+      });
+      if (error) throw error;
+      await authorizeUser(data.session);
+    } catch (error) {
+      console.error('Admin sign-in failed:', error);
+      showAuthError('Sign-in failed. Check your credentials and Supabase Auth settings.');
+    } finally {
+      button.disabled = false;
+    }
+  });
+
+  document.getElementById('admin-signout-btn').addEventListener('click', async () => {
+    const { error } = await supabaseClient.auth.signOut();
+    if (error) {
+      console.error('Admin sign-out failed:', error);
+      dataMessage.textContent = 'Sign out failed. Please try again.';
+      return;
+    }
+    records.contacts = [];
+    records.volunteers = [];
+    records.donations = [];
+    records.subscribers = [];
+    setAuthenticated(false);
+    showAuthError('');
+  });
+
+  supabaseClient.auth.getSession().then(({ data, error }) => {
+    if (error) {
+      console.error('Unable to read Supabase session:', error);
+      showAuthError('Could not read the sign-in session. Reload and try again.');
+      return;
+    }
+    return authorizeUser(data.session);
+  });
+
+  supabaseClient.auth.onAuthStateChange((event, session) => {
+    if (event === 'SIGNED_OUT') setAuthenticated(false);
+  });
 }
-
-function renderVolunteers() {
-  const tbody = document.getElementById('volunteers-tbody');
-  if (!tbody) return;
-  tbody.innerHTML = volunteers.map(r => `
-    <tr>
-      <td>${r.id}</td><td>${r.name}</td><td>${r.email}</td>
-      <td>${r.country}</td><td>${r.role}</td><td>${r.avail}</td>
-      <td>${r.date}</td><td>${statusBadge(r.status)}</td>
-    </tr>`).join('');
-}
-
-function renderDonations() {
-  const tbody = document.getElementById('donations-tbody');
-  if (!tbody) return;
-  tbody.innerHTML = donations.map(r => `
-    <tr>
-      <td>${r.id}</td><td>${r.name}</td><td>${r.email}</td>
-      <td><strong>${r.amount}</strong></td><td>${r.freq}</td>
-      <td>${r.program}</td><td>${r.date}</td>
-    </tr>`).join('');
-}
-
-function renderNewsletter() {
-  const tbody = document.getElementById('newsletter-tbody');
-  if (!tbody) return;
-  tbody.innerHTML = subscribers.map(r => `
-    <tr>
-      <td>${r.id}</td><td>${r.email}</td><td>${r.date}</td>
-      <td>${statusBadge(r.status)}</td>
-    </tr>`).join('');
-}
-
-// ── CSV Export ──────────────────────────────────────────────
-function exportCSV(data, filename) {
-  const headers = Object.keys(data[0]).join(',');
-  const rows    = data.map(r => Object.values(r).join(',')).join('\n');
-  const csv     = headers + '\n' + rows;
-  const blob    = new Blob([csv], { type: 'text/csv' });
-  const url     = URL.createObjectURL(blob);
-  const a       = document.createElement('a');
-  a.href = url; a.download = filename;
-  a.click(); URL.revokeObjectURL(url);
-}
-
-document.getElementById('export-contacts-btn')?.addEventListener('click', () => exportCSV(contacts, 'contacts.csv'));
-document.getElementById('export-volunteers-btn')?.addEventListener('click', () => exportCSV(volunteers, 'volunteers.csv'));
-document.getElementById('export-donations-btn')?.addEventListener('click', () => exportCSV(donations, 'donations.csv'));
-document.getElementById('export-newsletter-btn')?.addEventListener('click', () => exportCSV(subscribers, 'subscribers.csv'));
-
-// Init
-renderContacts();
-renderVolunteers();
-renderDonations();
-renderNewsletter();

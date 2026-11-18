@@ -6,15 +6,31 @@
 .sig-title { font-size: .83rem; color: var(--text-light); }
 
 .mvv-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
-.mvv-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 32px; transition: var(--transition); }
+.mvv-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 32px; transition: var(--transition); display: flex; flex-direction: column; }
 .mvv-card:hover { box-shadow: var(--shadow-lg); border-color: var(--primary-light); transform: translateY(-4px); }
 .featured-mvv { background: linear-gradient(135deg, var(--primary-dark), var(--primary)); border-color: transparent; }
 .featured-mvv h3, .featured-mvv p { color: #fff; }
 .mvv-icon { font-size: 2rem; margin-bottom: 16px; }
 .mvv-card h3 { margin-bottom: 12px; }
 .values-list { list-style: none; }
-.values-list li { font-size: .9rem; color: var(--text-mid); padding: 6px 0; border-bottom: 1px solid var(--border); }
+.values-list li { font-size: .9rem; color: var(--text-mid); padding: 8px 0; border-bottom: 1px solid var(--border); }
 .values-list li:last-child { border: none; }
+
+/* Target Beneficiaries Grid */
+.beneficiaries-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 24px; margin-top: 36px; }
+.beneficiary-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px; transition: var(--transition); box-shadow: var(--shadow-sm); display: flex; gap: 18px; align-items: flex-start; }
+.beneficiary-card:hover { box-shadow: var(--shadow-md); transform: translateY(-4px); border-color: var(--primary-light); }
+.beneficiary-icon { width: 50px; height: 50px; border-radius: 12px; background: rgba(26, 107, 60, 0.1); color: var(--primary); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
+.beneficiary-content h4 { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 6px; }
+.beneficiary-content p { font-size: .9rem; color: var(--text-mid); line-height: 1.55; margin: 0; }
+
+/* 5 Strategic Pillars Grid */
+.pillars-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; margin-top: 36px; }
+.pillar-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px; transition: var(--transition); box-shadow: var(--shadow-sm); display: flex; flex-direction: column; }
+.pillar-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-4px); border-color: var(--primary-light); }
+.pillar-num { display: inline-block; font-size: .78rem; font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 0.08em; background: rgba(26, 107, 60, 0.08); padding: 4px 10px; border-radius: var(--radius-full); width: fit-content; margin-bottom: 14px; }
+.pillar-card h3 { font-size: 1.15rem; font-weight: 700; color: var(--text-dark); margin-bottom: 10px; }
+.pillar-card p { font-size: .9rem; color: var(--text-mid); line-height: 1.6; margin: 0; flex-grow: 1; }
 
 .timeline { position: relative; max-width: 800px; margin: 0 auto; }
 .timeline::before { content: ''; position: absolute; left: 50%; top: 0; bottom: 0; width: 2px; background: var(--border); transform: translateX(-50%); }
@@ -33,6 +49,64 @@
 .team-role { font-size: .82rem; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
 .team-card p { font-size: .88rem; }
 
-@media (max-width: 1024px) { .team-grid { grid-template-columns: repeat(2, 1fr); } .mvv-grid { grid-template-columns: 1fr; } }
-@media (max-width: 768px) { .story-grid { grid-template-columns: 1fr; gap: 36px; } .timeline::before { left: 20px; } .tl-item, .tl-right { padding: 0 0 0 46px; flex-direction: row; } .tl-dot { left: 20px; } }
-@media (max-width: 480px) { .team-grid { grid-template-columns: 1fr; } .mvv-card { padding: 22px 18px; } }
+@media (max-width: 1024px) { 
+  .team-grid { grid-template-columns: repeat(2, 1fr); } 
+  .mvv-grid { grid-template-columns: 1fr; } 
+  .pillars-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) { 
+  .story-grid { grid-template-columns: 1fr; gap: 36px; } 
+  .timeline::before { left: 20px; } 
+  .tl-item, .tl-right { padding: 0 0 0 46px; flex-direction: row; } 
+  .tl-dot { left: 20px; } 
+  .beneficiaries-grid { grid-template-columns: 1fr; }
+  .pillars-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 480px) { 
+  .team-grid { grid-template-columns: 1fr; } 
+  .mvv-card { padding: 22px 18px; } 
+}
+
+
+/* Media Image Formatting & Quality Preservation */
+.about-media-img {
+  width: 100%;
+  height: 100%;
+  max-height: 460px;
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius-lg, 16px);
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.08);
+  aspect-ratio: 4 / 3;
+  display: block;
+  transition: transform 0.3s ease;
+}
+.about-media-img:hover {
+  transform: scale(1.01);
+}
+
+.about-caption-wrap {
+  margin-top: 10px;
+  font-size: 0.82rem;
+  color: var(--text-light, #64748b);
+  font-style: italic;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Dynamic About Sections Added Via Management Portal */
+.dynamic-about-section {
+  padding: 64px 0;
+  border-top: 1px solid var(--border, #e2e8f0);
+}
+.dynamic-about-section:nth-of-type(even) {
+  background: var(--bg-alt, #f8fafc);
+}
+
+@media (max-width: 768px) {
+  .about-media-img {
+    max-height: 320px;
+    aspect-ratio: 16 / 9;
+  }
+}

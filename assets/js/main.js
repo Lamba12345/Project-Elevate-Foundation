@@ -102,56 +102,123 @@ function showToast(message, type = 'success') {
   }
   toast.className = `toast ${type}`;
   const icon = type === 'success' ? '✅' : '❌';
-  toast.innerHTML = `<span>${icon}</span><span>${message}</span>`;
+  toast.replaceChildren();
+  const iconEl = document.createElement('span');
+  iconEl.textContent = icon;
+  const messageEl = document.createElement('span');
+  messageEl.textContent = message;
+  toast.append(iconEl, messageEl);
   toast.classList.add('show');
   setTimeout(() => toast.classList.remove('show'), 4000);
 }
 
-/* ── Generic form handler ────────────────────────────────── */
-function handleForm(formId, endpoint, successMsg) {
+/* ── Supabase form handler ───────────────────────────────── */
+function handleForm(formId, table, successMsg, toRecord) {
   const form = document.getElementById(formId);
   if (!form) return;
   form.addEventListener('submit', async e => {
     e.preventDefault();
     const btn = form.querySelector('button[type="submit"]');
-    const origText = btn.innerHTML;
-    btn.innerHTML = '<span class="spinner"></span> Sending...';
-    btn.disabled = true;
-
-    // Collect form data
-    const data = Object.fromEntries(new FormData(form).entries());
+    if (!form.checkValidity()) {
+      form.reportValidity();
+      return;
+    }
+    const origText = btn ? btn.innerHTML : '';
+    if (btn) {
+      btn.innerHTML = '<span class="spinner"></span> Sending...';
+      btn.disabled = true;
+    }
 
     try {
-      // -- Spring Boot endpoint integration --
-      // In production, replace the mock below with:
-      // const res = await fetch(endpoint, {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data)
-      // });
-      // if (!res.ok) throw new Error();
-
-      // Mock success (remove when backend is connected)
-      await new Promise(r => setTimeout(r, 1200));
+      if (!window.elevateSupabase) {
+        throw new Error('Supabase is not configured. Please try again later.');
+      }
+      const values = Object.fromEntries(new FormData(form).entries());
+      const { error } = await window.elevateSupabase
+        .from(table)
+        .insert(toRecord(values, form));
+      if (error) throw error;
 
       form.reset();
       const successEl = form.querySelector('.form-success');
       if (successEl) { successEl.classList.add('show'); setTimeout(() => successEl.classList.remove('show'), 5000); }
       showToast(successMsg, 'success');
-    } catch {
-      showToast('Something went wrong. Please try again.', 'error');
+    } catch (error) {
+      console.error(`Unable to submit ${table}:`, error);
+      showToast(error.message || 'Something went wrong. Please try again.', 'error');
     } finally {
-      btn.innerHTML = origText;
-      btn.disabled = false;
+      if (btn) {
+        btn.innerHTML = origText;
+        btn.disabled = false;
+      }
     }
   });
 }
 
 // Register forms
-handleForm('contact-form',   '/api/contact',   'Message sent! We\'ll get back to you soon.');
-handleForm('volunteer-form', '/api/volunteer',  'Thank you for volunteering! We\'ll be in touch.');
-handleForm('donate-form',    '/api/donate',     'Thank you for your generous donation! 💚');
-handleForm('newsletter-form','/api/newsletter', 'You\'re subscribed to our newsletter!');
+handleForm('contact-form', 'contact_messages', 'Message sent! We\'ll get back to you soon.', values => ({
+  name: values.name.trim(),
+  email: values.email.trim(),
+  subject: values.subject.trim(),
+  department: values.department,
+  message: values.message.trim()
+}));
+handleForm('volunteer-form', 'volunteer_applications', 'Thank you for volunteering! We\'ll be in touch.', values => ({
+  first_name: values.firstName.trim(),
+  last_name: values.lastName.trim(),
+  email: values.email.trim(),
+  phone: values.phone.trim(),
+  country: values.country.trim(),
+  role: values.role,
+  availability: values.availability,
+  bio: values.bio.trim()
+}));
+const donationForm = document.getElementById('donate-form');
+if (donationForm) {
+  donationForm.addEventListener('submit', async event => {
+    event.preventDefault();
+    if (!donationForm.checkValidity()) {
+      donationForm.reportValidity();
+      return;
+    }
+
+    const button = donationForm.querySelector('button[type="submit"]');
+    const originalText = button.innerHTML;
+    button.disabled = true;
+    button.innerHTML = '<span class="spinner"></span> Connecting to Paystack...';
+
+    try {
+      if (!window.elevateSupabase) {
+        throw new Error('Supabase is not configured. Please try again later.');
+      }
+
+      const values = Object.fromEntries(new FormData(donationForm).entries());
+      const { data, error } = await window.elevateSupabase.functions.invoke('paystack-initialize', {
+        body: {
+          name: values.name.trim(),
+          email: values.email.trim(),
+          amount: Number(values.amount),
+          frequency: donationForm.querySelector('.freq-btn.active')?.dataset.freq || 'one-time',
+          program: values.program || '',
+          message: values.message.trim(),
+          payment_method: donationForm.querySelector('.payment-method-card.active')?.dataset.method || 'momo'
+        }
+      });
+
+      if (error) throw error;
+      if (!data?.authorization_url) throw new Error('Paystack did not return a checkout link.');
+      window.location.assign(data.authorization_url);
+    } catch (error) {
+      console.error('Unable to start Paystack checkout:', error);
+      showToast(error.message || 'Unable to start payment. Please try again.', 'error');
+      button.disabled = false;
+      button.innerHTML = originalText;
+    }
+  });
+}
+handleForm('newsletter-form', 'newsletter_subscribers', 'You\'re subscribed to our newsletter!', values => ({
+  email: values.email.trim().toLowerCase()
+}));
 
 /* ── Progress bar animation ──────────────────────────────── */
 const progressObserver = new IntersectionObserver(entries => {

@@ -74,3 +74,29 @@ document.querySelectorAll('.freq-btn').forEach(btn => {
 
 // Init
 updateAmount(100);
+
+const paymentReference = new URLSearchParams(window.location.search).get('reference')
+  || new URLSearchParams(window.location.search).get('trxref');
+if (paymentReference && window.elevateSupabase) {
+  window.elevateSupabase.functions.invoke('paystack-verify', {
+    body: { reference: paymentReference }
+  }).then(({ data, error }) => {
+    if (error) throw error;
+    if (!data?.paid) {
+      throw new Error(data?.message || 'Payment has not been confirmed yet.');
+    }
+
+    const successMessage = document.querySelector('#donate-form .form-success');
+    if (successMessage) {
+      successMessage.textContent = data.message;
+      successMessage.classList.add('show');
+    }
+    if (window.showToast) window.showToast(data.message, 'success');
+    window.history.replaceState({}, document.title, window.location.pathname + window.location.hash);
+  }).catch(error => {
+    console.error('Unable to verify Paystack payment:', error);
+    if (window.showToast) {
+      window.showToast(error.message || 'Unable to verify payment. Please try again shortly.', 'error');
+    }
+  });
+}

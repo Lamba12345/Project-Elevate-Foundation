@@ -2,6 +2,17 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Inter', sans-serif; background: #f1f5f0; }
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@700;800;900&display=swap');
+[hidden] { display: none !important; }
+
+.admin-auth { min-height: 100vh; display: grid; place-items: center; padding: 24px; }
+.admin-auth-card { width: min(100%, 420px); display: flex; flex-direction: column; gap: 12px; padding: 32px; background: #fff; border: 1px solid #e2e8f0; border-radius: 16px; box-shadow: 0 14px 40px rgba(15, 45, 28, .12); }
+.admin-auth-card img { width: 52px; height: 52px; object-fit: contain; margin: 0 auto 8px; }
+.admin-auth-card h1, .admin-auth-card > p { text-align: center; }
+.admin-auth-card > p { color: #6b7280; margin-bottom: 8px; }
+.admin-auth-card label { font-size: .88rem; font-weight: 600; }
+.admin-auth-card input { width: 100%; padding: 12px; border: 1px solid #d1d5db; border-radius: 8px; font: inherit; }
+.admin-auth-card button { justify-content: center; margin-top: 8px; }
+.admin-auth-error { color: #b91c1c !important; font-size: .88rem; }
 
 .admin-layout { display: grid; grid-template-columns: 260px 1fr; min-height: 100vh; }
 .admin-sidebar {

@@ -65,7 +65,7 @@
           }
         });
       }
-    } catch (_) {}
+    } catch (_) { }
 
     // 3. Filter out any locally deleted submission IDs
     try {
@@ -74,7 +74,7 @@
         const deletedIds = new Set(JSON.parse(delRaw));
         approvedItems = approvedItems.filter(i => !deletedIds.has(String(i.id)));
       }
-    } catch (_) {}
+    } catch (_) { }
 
     if (approvedItems.length === 0) return;
 
@@ -217,7 +217,7 @@
     `;
   }
 
-  
+
   // 5. Page-Specific Dynamic Updates
   function detectCurrentPage() {
     const p = window.location.pathname.toLowerCase();

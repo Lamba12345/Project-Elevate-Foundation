@@ -4,9 +4,9 @@
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 
-  <!-- 1. Homepage -->
+  <!-- 1. Homepage (includes Gallery & Events sections) -->
   <url>
-    <loc>https://projectelevatefoundation.org/</loc>
+    <loc>https://www.projectelevatefoundation.org/</loc>
     <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
@@ -14,15 +14,15 @@
 
   <!-- 2. About Us Page -->
   <url>
-    <loc>https://projectelevatefoundation.org/about.html</loc>
+    <loc>https://www.projectelevatefoundation.org/about.html</loc>
     <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
 
-  <!-- 3. Programs & Strategic Pillars -->
+  <!-- 3. Our Projects & Strategic Pillars (Programs) -->
   <url>
-    <loc>https://projectelevatefoundation.org/programs.html</loc>
+    <loc>https://www.projectelevatefoundation.org/programs.html</loc>
     <lastmod>2026-11-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
@@ -30,7 +30,7 @@
 
   <!-- 4. Blog & News Announcements -->
   <url>
-    <loc>https://projectelevatefoundation.org/blog.html</loc>
+    <loc>https://www.projectelevatefoundation.org/blog.html</loc>
     <lastmod>2026-11-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.8</priority>
@@ -38,7 +38,7 @@
 
   <!-- 5. Volunteer Application Page -->
   <url>
-    <loc>https://projectelevatefoundation.org/volunteer.html</loc>
+    <loc>https://www.projectelevatefoundation.org/volunteer.html</loc>
     <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -46,7 +46,7 @@
 
   <!-- 6. Donate Page -->
   <url>
-    <loc>https://projectelevatefoundation.org/donate.html</loc>
+    <loc>https://www.projectelevatefoundation.org/donate.html</loc>
     <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
@@ -54,7 +54,7 @@
 
   <!-- 7. Contact Us Page -->
   <url>
-    <loc>https://projectelevatefoundation.org/contact.html</loc>
+    <loc>https://www.projectelevatefoundation.org/contact.html</loc>
     <lastmod>2026-11-20</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

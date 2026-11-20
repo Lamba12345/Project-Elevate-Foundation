@@ -1,6 +1,6 @@
 # =====================================================================
 # Project Elevate Foundation — Robots Exclusion Protocol
-# Website: https://projectelevatefoundation.org
+# Website: https://www.projectelevatefoundation.org
 # =====================================================================
 
 User-agent: *
@@ -15,4 +15,4 @@ Disallow: /backend/
 Disallow: /supabase/
 
 # Google Search Console XML Sitemap
-Sitemap: https://projectelevatefoundation.org/sitemap.xml
+Sitemap: https://www.projectelevatefoundation.org/sitemap.xml

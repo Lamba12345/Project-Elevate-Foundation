@@ -67,19 +67,20 @@
           <span>💛</span><span>Donate</span>
         </a>
 
-        <!-- Public Engagement Section (Shared: Contact Messages accessible to managers too) -->
+        <!-- Visitor Inquiries Section (Shared: Contact Messages & Volunteer Applications) -->
         <div class="dash-nav-section-title">Visitor Inquiries</div>
         <a href="#contacts" class="dash-nav-link" data-tab="contacts">
-          <span>✉️</span><span>Contact Messages</span>
+          <span>✉️</span><span>Contact &amp; Volunteer Messages</span>
           <span class="dash-nav-badge" id="contacts-count-badge" style="display:none;background:#0284c7;color:#fff;">0</span>
+        </a>
+        <a href="#volunteers" class="dash-nav-link" data-tab="volunteers">
+          <span>🤝</span><span>Volunteer Applications</span>
+          <span class="dash-nav-badge" id="volunteers-count-badge" style="display:none;background:#10b981;color:#fff;">0</span>
         </a>
 
         <!-- Super Admin Settings Section -->
         <div class="super-admin-only">
           <div class="dash-nav-section-title">Applications &amp; Finance</div>
-          <a href="#volunteers" class="dash-nav-link" data-tab="volunteers">
-            <span>🤝</span><span>Volunteer Applications</span>
-          </a>
           <a href="#donations" class="dash-nav-link" data-tab="donations">
             <span>💛</span><span>Donations (Paystack)</span>
           </a>
@@ -500,31 +501,52 @@
           </div>
         </div>
 
-        <!-- 12. PUBLIC ENGAGEMENT TABS (Super Admin only) -->
+        <!-- 12. VISITOR INQUIRIES & CONTACT MESSAGES TAB -->
         <div class="dash-tab-pane" id="tab-contacts">
           <div class="section-header-row">
             <div>
-              <h2>✉️ Visitor Contact Messages</h2>
-              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">Messages submitted by visitors through the public Contact page form.</p>
+              <h2>✉️ Visitor Contact &amp; Volunteer Messages</h2>
+              <p style="margin:2px 0 0;font-size:0.85rem;color:#64748b;">
+                Messages and inquiries submitted by visitors from the Contact Us page and Volunteer Application form.
+              </p>
             </div>
-            <button class="btn-dash-outline"
-              onclick="window.exportCsv(window.state?.contacts, 'contact_messages.csv')">📥 Export CSV</button>
+            <button class="btn-dash-outline" onclick="window.exportUnifiedMessages()">📥 Export CSV</button>
           </div>
+
+          <!-- Filter & Search Toolbar -->
+          <div class="dash-card" style="margin-bottom:16px;padding:14px 18px;">
+            <div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between;">
+              <div style="display:flex;flex-wrap:wrap;gap:6px;align-items:center;" id="contacts-filters">
+                <button type="button" class="btn-filter-pill active" onclick="window.filterContactType('all')">All Messages (<span id="count-all-inquiries">0</span>)</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterContactType('contact')">✉️ Contact Us (<span id="count-contact-inquiries">0</span>)</button>
+                <button type="button" class="btn-filter-pill" onclick="window.filterContactType('volunteer')">🤝 Volunteer Messages (<span id="count-volunteer-inquiries">0</span>)</button>
+              </div>
+              <div style="position:relative;min-width:240px;">
+                <input type="text" id="contacts-search-input" class="form-control-dash" placeholder="🔍 Search messages or senders..." oninput="window.searchContactMessages(this.value)" style="padding-left:12px;height:36px;font-size:0.85rem;" />
+              </div>
+            </div>
+          </div>
+
           <div class="dash-card">
             <div class="dash-table-wrap">
               <table class="dash-table">
                 <thead>
                   <tr>
                     <th>#</th>
-                    <th>Sender</th>
-                    <th>Subject</th>
+                    <th>Sender &amp; Contact</th>
+                    <th>Source</th>
+                    <th>Subject / Role</th>
                     <th>Message Preview</th>
-                    <th>Date</th>
+                    <th>Date Received</th>
                     <th>Status</th>
-                    <th>Actions</th>
+                    <th style="text-align:right;">Actions</th>
                   </tr>
                 </thead>
-                <tbody id="contacts-tbody"></tbody>
+                <tbody id="contacts-tbody">
+                  <tr>
+                    <td colspan="8" class="empty-state">Loading visitor messages...</td>
+                  </tr>
+                </tbody>
               </table>
             </div>
           </div>
@@ -547,6 +569,7 @@
                     <th>Availability</th>
                     <th>Date</th>
                     <th>Status</th>
+                    <th style="text-align:right;">Actions</th>
                   </tr>
                 </thead>
                 <tbody id="volunteers-tbody"></tbody>
@@ -615,8 +638,8 @@
         <h3 id="sub-modal-title">Create Content Submission</h3>
         <button class="btn-modal-close" onclick="window.closeSubmissionModal()">&times;</button>
       </div>
-      <form id="submission-form" onsubmit="event.preventDefault();">
-        <div class="dash-modal-body">
+      <form id="submission-form" onsubmit="event.preventDefault();" style="display:flex;flex-direction:column;flex:1;min-height:0;overflow:hidden;height:100%;">
+        <div class="dash-modal-body" style="overflow-y:auto;overflow-x:hidden;flex:1;min-height:0;-webkit-overflow-scrolling:touch;">
           <div id="sub-feedback-box"
             style="display:none;background:#fef2f2;border:1px solid #fecaca;padding:12px;border-radius:8px;margin-bottom:16px;">
             <strong style="color:#b91c1c;font-size:0.85rem;">Correction Requested by Super Admin:</strong>
@@ -702,15 +725,14 @@
                 <span style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;">Live Preview (Aspect-Ratio Preserved)</span>
                 <button type="button" class="btn-action-sm btn-action-delete" onclick="window.clearModalImage()">Remove Image</button>
               </div>
-              <img id="sub-image-preview" src="" alt="Preview" style="max-height:140px;border-radius:8px;border:1px solid #e2e8f0;object-fit:cover;" />
+              <img id="sub-image-preview" src="" alt="Preview" style="width:100%;max-width:320px;height:180px;border-radius:8px;border:1px solid #cbd5e1;object-fit:cover;object-position:center;display:block;background:#f8fafc;" />
             </div>
           </div>
         </div>
-        <div class="dash-modal-footer">
+        <div class="dash-modal-footer" style="flex-shrink:0;position:sticky;bottom:0;z-index:10;background:#f8fafc;">
           <button type="button" class="btn-dash-outline" onclick="window.closeSubmissionModal()">Cancel</button>
-          <button type="button" class="btn-dash-outline" onclick="window.handleSubmissionSave('DRAFT')">Save
-            Draft</button>
-          <button type="button" class="btn-dash-primary" onclick="window.handleSubmissionSave('APPROVED')">
+          <button type="button" class="btn-dash-outline" onclick="window.handleSubmissionSave('DRAFT')">Save Draft</button>
+          <button type="button" class="btn-dash-primary" id="sub-publish-btn" onclick="window.handleSubmissionSave('APPROVED')">
             <span>🚀 Publish Live to Website</span>
           </button>
         </div>
@@ -822,13 +844,14 @@
   <div class="dash-modal-backdrop" id="contact-view-modal">
     <div class="dash-modal-card">
       <div class="dash-modal-header">
-        <h3>Contact Message Details</h3>
+        <h3 id="cm-modal-title">Visitor Message Details</h3>
         <button class="btn-modal-close" onclick="window.closeContactModal()">&times;</button>
       </div>
       <div class="dash-modal-body">
         <div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:16px;border-bottom:1px solid #e2e8f0;padding-bottom:12px;">
           <div>
-            <h4 id="cm-name" style="margin:0 0 4px;font-size:1.1rem;color:#0f172a;"></h4>
+            <div id="cm-source-wrap" style="margin-bottom:6px;"></div>
+            <h4 id="cm-name" style="margin:0 0 4px;font-size:1.15rem;color:#0f172a;"></h4>
             <div id="cm-email-phone" style="font-size:0.85rem;color:#64748b;"></div>
           </div>
           <div style="text-align:right;">
@@ -837,14 +860,16 @@
           </div>
         </div>
 
+        <div id="cm-extra-fields" style="display:none;background:#f1f5f9;border-radius:8px;padding:10px 14px;margin-bottom:14px;font-size:0.85rem;color:#334155;"></div>
+
         <div style="margin-bottom:14px;">
-          <label style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;">Subject</label>
-          <div id="cm-subject" style="font-weight:700;font-size:1rem;color:#1e293b;margin-top:2px;"></div>
+          <label style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;" id="cm-subject-label">Subject / Strategic Role</label>
+          <div id="cm-subject" style="font-weight:700;font-size:1.02rem;color:#1e293b;margin-top:2px;"></div>
         </div>
 
         <div>
-          <label style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;">Message</label>
-          <div id="cm-message" style="margin-top:6px;font-size:0.92rem;line-height:1.6;color:#334155;background:#f8fafc;padding:14px;border-radius:8px;border:1px solid #e2e8f0;white-space:pre-wrap;"></div>
+          <label style="font-size:0.75rem;font-weight:700;color:#64748b;text-transform:uppercase;" id="cm-message-label">Message / Personal Statement</label>
+          <div id="cm-message" style="margin-top:6px;font-size:0.92rem;line-height:1.65;color:#334155;background:#f8fafc;padding:14px;border-radius:8px;border:1px solid #e2e8f0;white-space:pre-wrap;"></div>
         </div>
       </div>
       <div class="dash-modal-footer">

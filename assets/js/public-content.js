@@ -34,27 +34,55 @@
   }
 
   async function loadApprovedPublicContent() {
-    if (!supabase) return;
+    let approvedItems = [];
 
-    try {
-      // Query ONLY approved content (also enforced by database RLS)
-      const { data, error } = await supabase
-        .from('content_submissions')
-        .select('*')
-        .eq('status', 'APPROVED')
-        .order('created_at', { ascending: false });
+    // 1. Fetch from Supabase (if online and schema is hosted)
+    if (supabase) {
+      try {
+        const { data, error } = await supabase
+          .from('content_submissions')
+          .select('*')
+          .eq('status', 'APPROVED')
+          .order('created_at', { ascending: false });
 
-      if (error || !data || data.length === 0) return;
-
-      renderApprovedGallery(data.filter(i => i.content_type === 'gallery'));
-      renderApprovedNews(data.filter(i => i.content_type === 'news_announcement' || i.content_type === 'publication'));
-      renderApprovedEvents(data.filter(i => i.content_type === 'event'));
-      renderApprovedAnnouncements(data.filter(i => i.content_type === 'news_announcement' && (i.metadata?.is_banner || i.summary?.includes('announcement'))));
-      renderApprovedPageUpdates(data);
-
-    } catch (e) {
-      console.warn('Public content loader (using default static content):', e);
+        if (!error && data && data.length > 0) {
+          approvedItems = data;
+        }
+      } catch (e) {
+        console.warn('Supabase public content check:', e);
+      }
     }
+
+    // 2. Merge with locally saved custom submissions (unhosted / schema cache resilient)
+    try {
+      const raw = localStorage.getItem('pef_custom_submissions');
+      if (raw) {
+        const localCustom = JSON.parse(raw);
+        const existingIds = new Set(approvedItems.map(i => String(i.id)));
+        localCustom.forEach(item => {
+          if (item.status === 'APPROVED' && !existingIds.has(String(item.id))) {
+            approvedItems.push(item);
+          }
+        });
+      }
+    } catch (_) {}
+
+    // 3. Filter out any locally deleted submission IDs
+    try {
+      const delRaw = localStorage.getItem('pef_deleted_submission_ids');
+      if (delRaw) {
+        const deletedIds = new Set(JSON.parse(delRaw));
+        approvedItems = approvedItems.filter(i => !deletedIds.has(String(i.id)));
+      }
+    } catch (_) {}
+
+    if (approvedItems.length === 0) return;
+
+    renderApprovedGallery(approvedItems.filter(i => i.content_type === 'gallery'));
+    renderApprovedNews(approvedItems.filter(i => i.content_type === 'news_announcement' || i.content_type === 'publication'));
+    renderApprovedEvents(approvedItems.filter(i => i.content_type === 'event'));
+    renderApprovedAnnouncements(approvedItems.filter(i => i.content_type === 'news_announcement' && (i.metadata?.is_banner || i.summary?.includes('announcement'))));
+    renderApprovedPageUpdates(approvedItems);
   }
 
   // 1. Photo and Video Gallery

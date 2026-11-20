@@ -74,24 +74,7 @@
       }
     }
 
-    // 3. Fallback: Query user_roles directly by user_id
-    if (!profile && user.id) {
-      try {
-        const { data: byId, error: idErr } = await supabase
-          .from('user_roles')
-          .select('*')
-          .eq('user_id', user.id)
-          .maybeSingle();
-
-        if (!idErr && byId) {
-          profile = byId;
-        }
-      } catch (e) {
-        console.warn('Query user_roles by user_id:', e);
-      }
-    }
-
-    // 4. Fallback: Query user_roles directly by email & auto-link user_id
+    // 3. Fallback: Query user_roles directly by email & auto-link user_id
     if (!profile && cleanEmail) {
       try {
         const { data: byEmail, error: emailErr } = await supabase
@@ -113,6 +96,23 @@
         }
       } catch (e) {
         console.warn('Query user_roles by email:', e);
+      }
+    }
+
+    // 4. Fallback: Query user_roles directly by user_id
+    if (!profile && user.id) {
+      try {
+        const { data: byId, error: idErr } = await supabase
+          .from('user_roles')
+          .select('*')
+          .eq('user_id', user.id)
+          .maybeSingle();
+
+        if (!idErr && byId) {
+          profile = byId;
+        }
+      } catch (e) {
+        console.warn('Query user_roles by user_id:', e);
       }
     }
 
@@ -153,7 +153,7 @@
       throw new Error('Account Suspended: Your manager account has been deactivated by the Super Admin.');
     }
 
-    if (profile.role !== 'manager' && profile.role !== 'super_admin') {
+    if (profile.role !== 'manager' && profile.role !== 'super_admin' && profile.role !== 'admin') {
       throw new Error(`Access Denied: Your account role (${profile.role}) is not authorized for team access.`);
     }
 

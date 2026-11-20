@@ -6,18 +6,21 @@
 
 /* ── Design Tokens ────────────────────────────────────────── */
 :root {
-  --primary:       #1a6b3c;
-  --primary-light: #27a85f;
-  --primary-dark:  #0f4227;
-  --accent:        #f59e0b;
-  --accent-light:  #fcd34d;
-  --accent-dark:   #d97706;
+  --primary:       #15803d;
+  --primary-light: #22c55e;
+  --primary-dark:  #14532d;
+  --accent:        #0284c7;
+  --accent-light:  #38bdf8;
+  --accent-dark:   #0369a1;
+  --sea-blue:      #0284c7;
+  --sea-blue-light:#38bdf8;
+  --sea-blue-dark: #0369a1;
   --text-dark:     #0f172a;
-  --text-mid:      #374151;
-  --text-light:    #6b7280;
+  --text-mid:      #334155;
+  --text-light:    #64748b;
   --bg-white:      #ffffff;
   --bg-light:      #f8fafc;
-  --bg-section:    #f1f5f0;
+  --bg-section:    #f0fdf4;
   --border:        #e2e8f0;
   --shadow-sm:     0 1px 3px rgba(0,0,0,.08);
   --shadow-md:     0 4px 16px rgba(0,0,0,.10);
@@ -171,12 +174,12 @@ p:last-child {
 
 .btn-accent {
   background: linear-gradient(135deg, var(--accent-light), var(--accent));
-  color: var(--text-dark);
+  color: #ffffff;
   font-weight: 700;
 }
 
 .btn-accent:hover {
-  box-shadow: 0 6px 20px rgba(245,158,11,.35);
+  box-shadow: 0 6px 20px rgba(2, 132, 199, .35);
 }
 
 .btn-white {
@@ -351,17 +354,17 @@ p:last-child {
 
 .nav-links a.nav-donate {
   background: linear-gradient(135deg, var(--accent-light), var(--accent));
-  color: var(--text-dark) !important;
+  color: #ffffff !important;
   font-weight: 700;
   padding: 8px 18px;
   border-radius: var(--radius-full);
-  box-shadow: 0 2px 8px rgba(245,158,11,.25);
+  box-shadow: 0 2px 8px rgba(2, 132, 199, .25);
   transition: transform .2s ease, box-shadow .2s ease;
 }
 
 .nav-links a.nav-donate:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 14px rgba(245,158,11,.35);
+  box-shadow: 0 4px 14px rgba(2, 132, 199, .35);
 }
 
 .hamburger {
@@ -423,7 +426,7 @@ p:last-child {
 
 .mobile-nav .nav-donate {
   background: linear-gradient(135deg, var(--accent-light), var(--accent));
-  color: var(--text-dark) !important;
+  color: #ffffff !important;
   font-weight: 700;
   text-align: center;
   margin-top: 10px;
@@ -702,9 +705,9 @@ p:last-child {
 }
 
 .tag-accent {
-  background: #fef3c7;
+  background: #e0f2fe;
   color: var(--accent-dark);
-  border-color: rgba(245,158,11,.25);
+  border-color: rgba(2, 132, 199, .25);
 }
 
 /* ── Toast ────────────────────────────────────────────────── */

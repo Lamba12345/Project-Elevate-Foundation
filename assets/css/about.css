@@ -44,9 +44,10 @@
 .team-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
 .team-card { background: var(--bg-white); border: 1px solid var(--border); border-radius: var(--radius-md); padding: 28px 20px; text-align: center; transition: var(--transition); }
 .team-card:hover { box-shadow: var(--shadow-lg); border-color: var(--primary-light); transform: translateY(-4px); }
-.team-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; }
+.team-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 16px; display: flex; align-items: center; justify-content: center; font-size: 2rem; overflow: hidden; }
+.team-avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
 .team-card h4 { margin-bottom: 4px; }
-.team-role { font-size: .82rem; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
+.team-role { font-size: .82rem; color: var(--accent); font-weight: 600; text-transform: uppercase; letter-spacing: .06em; margin-bottom: 10px; }
 .team-card p { font-size: .88rem; }
 
 @media (max-width: 1024px) { 

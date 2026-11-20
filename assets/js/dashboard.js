@@ -231,15 +231,48 @@
       created_at: new Date('2026-01-20T15:00:00Z').toISOString()
     },
     {
-      id: 'default-about-team',
+      id: 'default-about-team-1',
       content_type: 'website_content',
-      title: 'Meet Our Leadership Team',
-      summary: 'Executive directors leading the foundation\'s regional operations.',
-      content: '1. Dzifa Asomany Esq — Founder & Executive Director (Former WHO physician with 20+ years in global health)\n2. James Kariuki — Chief Operations Officer (Expert in non-profit operations scaling field programmes)\n3. Sofia Martinez — Head of Programs (Curriculum designer leading education & empowerment)\n4. Emmanuel Agyei — Head of Partnerships (Builds alliances with international development partners)',
+      title: 'Dzifa Asomany Esq',
+      summary: 'Founder & Executive Director',
+      content: 'Former WHO physician with 20+ years in global health and community development.',
       image_url: '',
-      metadata: { target_page: 'about', page: 'about', target_section: 'Leadership', section_key: 'about.team' },
+      metadata: { target_page: 'about', page: 'about', target_section: 'Leadership', section_key: 'about.team.1', team_id: 'team-1', avatar_icon: '👩🏾' },
       status: 'APPROVED',
       created_at: new Date('2026-01-22T16:00:00Z').toISOString()
+    },
+    {
+      id: 'default-about-team-2',
+      content_type: 'website_content',
+      title: 'James Kariuki',
+      summary: 'Chief Operations Officer',
+      content: 'Expert in non-profit operations, scaling field programmes across Sub-Saharan Africa.',
+      image_url: '',
+      metadata: { target_page: 'about', page: 'about', target_section: 'Leadership', section_key: 'about.team.2', team_id: 'team-2', avatar_icon: '👨🏽' },
+      status: 'APPROVED',
+      created_at: new Date('2026-01-22T16:01:00Z').toISOString()
+    },
+    {
+      id: 'default-about-team-3',
+      content_type: 'website_content',
+      title: 'Sofia Martinez',
+      summary: 'Head of Programs',
+      content: 'Curriculum designer and development specialist leading our education and empowerment initiatives.',
+      image_url: '',
+      metadata: { target_page: 'about', page: 'about', target_section: 'Leadership', section_key: 'about.team.3', team_id: 'team-3', avatar_icon: '👩🏻' },
+      status: 'APPROVED',
+      created_at: new Date('2026-01-22T16:02:00Z').toISOString()
+    },
+    {
+      id: 'default-about-team-4',
+      content_type: 'website_content',
+      title: 'Emmanuel Agyei',
+      summary: 'Head of Partnerships',
+      content: 'Builds strategic alliances with governments, UN agencies, and global corporations.',
+      image_url: '',
+      metadata: { target_page: 'about', page: 'about', target_section: 'Leadership', section_key: 'about.team.4', team_id: 'team-4', avatar_icon: '👨🏿' },
+      status: 'APPROVED',
+      created_at: new Date('2026-01-22T16:03:00Z').toISOString()
     },
     {
       id: 'default-about-timeline',
@@ -254,71 +287,247 @@
     },
 
     // ── OTHER PAGES BASELINE CONTENT ──
+    // HOME PAGE
     {
-      id: 'default-home-1',
+      id: 'default-home-hero',
       content_type: 'website_content',
       title: 'Elevating, Empowering and Transforming Lives',
-      summary: 'Homepage Hero Spotlight & Core Tagline',
-      content: 'Project Elevate Foundation is dedicated to creating an empowered and self-reliant society where every individual has access to quality education, opportunities for personal development, and sustainable livelihood.',
-      image_url: 'assets/images/program_education.jpg',
-      metadata: { target_page: 'home', page: 'home', target_section: 'Hero Banner' },
+      summary: 'Homepage Hero Headline & Lead Introduction',
+      content: 'Project Elevate Foundation focuses on community development in Ghana, compassionate social support, and transforming lives. Through community empowerment, quality education, youth mentorship, and practical vocational training, we build self-reliance and create lasting social impact for underserved communities.',
+      image_url: 'assets/images/hero_banner.jpg',
+      metadata: { target_page: 'home', page: 'home', target_section: 'Hero Banner', section_key: 'home.hero' },
       status: 'APPROVED',
       created_at: new Date('2026-01-15T09:00:00Z').toISOString()
     },
     {
-      id: 'default-prog-1',
+      id: 'default-home-mission',
+      content_type: 'website_content',
+      title: 'Community Development, Social Support & Self-Reliance',
+      summary: 'Our Purpose & Mission Overview',
+      content: 'Project Elevate Foundation operates from the conviction that community development in Ghana must be grassroots-led and self-sustaining. We work with local communities to overcome educational barriers, build vocational capacity, and deliver compassionate social support that elevates lives.',
+      image_url: 'assets/images/program_community.jpg',
+      metadata: { target_page: 'home', page: 'home', target_section: 'Our Purpose & Mission', section_key: 'home.mission' },
+      status: 'APPROVED',
+      created_at: new Date('2026-01-15T09:30:00Z').toISOString()
+    },
+    {
+      id: 'default-home-impact',
+      content_type: 'website_content',
+      title: 'Impact & Community Reach Milestone',
+      summary: '50,000+ Lives Touched · 2,000+ Active Volunteers · 120+ Programs',
+      content: 'Through dedicated community development and social support programs across Ghana, we have directly empowered over 50,000 individuals, supported by 2,000+ volunteers and passionate partners.',
+      image_url: '',
+      metadata: { target_page: 'home', page: 'home', target_section: 'Impact Highlights', section_key: 'home.impact' },
+      status: 'APPROVED',
+      created_at: new Date('2026-01-15T10:00:00Z').toISOString()
+    },
+    {
+      id: 'default-home-cta',
+      content_type: 'website_content',
+      title: 'Join Thousands Making Change Happen',
+      summary: 'Homepage Call To Action Banner',
+      content: 'Whether you give your time, make a donation, or partner with our grassroots initiatives, your involvement creates lasting change for communities in Ghana.',
+      image_url: '',
+      metadata: { target_page: 'home', page: 'home', target_section: 'Call To Action', section_key: 'home.cta' },
+      status: 'APPROVED',
+      created_at: new Date('2026-01-15T10:30:00Z').toISOString()
+    },
+
+    // PROGRAMS PAGE
+    {
+      id: 'default-prog-hero',
+      content_type: 'website_content',
+      title: 'Our Core Programs & Strategic Initiatives',
+      summary: 'Programs Hero Introduction & Overview',
+      content: 'Empowering individuals, youth, and communities across Ghana through targeted education, vocational training, economic livelihoods, and community development.',
+      image_url: '',
+      metadata: { target_page: 'programs', page: 'programs', target_section: 'Hero & Overview', section_key: 'programs.hero' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-01T07:30:00Z').toISOString()
+    },
+    {
+      id: 'default-prog-p1',
       content_type: 'activity',
-      title: 'Pillar 1: Educational Development',
-      summary: 'Bridging educational gaps through school support, learning materials, and infrastructure assistance.',
-      content: 'Supporting underserved schools, delivering learning kits, textbooks, and upgrading classroom facilities.',
+      title: 'Pillar 01: Educational Development',
+      summary: 'Bridging educational gaps through school support and quality learning opportunities.',
+      content: 'Bridging educational gaps through school support, learning materials, infrastructure assistance, and initiatives that improve the quality of education in Ghana. We support underprivileged children and underserved schools with essential books, classroom supplies, academic tutoring, and enhanced learning environments.',
       image_url: 'assets/images/program_education.jpg',
-      metadata: { target_page: 'programs', page: 'programs', target_section: 'Pillar 1' },
+      metadata: { target_page: 'programs', page: 'programs', target_section: 'Pillar 01: Educational Development', section_key: 'programs.education' },
       status: 'APPROVED',
       created_at: new Date('2026-02-01T08:00:00Z').toISOString()
+    },
+    {
+      id: 'default-prog-p2',
+      content_type: 'activity',
+      title: 'Pillar 02: Youth Empowerment and Mentorship',
+      summary: 'Equipping young people with confidence, leadership, and career guidance.',
+      content: 'Equipping young people with confidence, leadership skills, career direction, and the guidance required to make informed life decisions. Through structured mentorship pairings, youth leadership sessions, and personal development forums, we empower adolescents and young adults in Ghana.',
+      image_url: 'assets/images/program_youth.jpg',
+      metadata: { target_page: 'programs', page: 'programs', target_section: 'Pillar 02: Youth Empowerment', section_key: 'programs.youth' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-01T08:30:00Z').toISOString()
+    },
+    {
+      id: 'default-prog-p3',
+      content_type: 'activity',
+      title: 'Pillar 03: Skills Acquisition & Vocational Training',
+      summary: 'Providing practical, market-relevant skills that promote employability and self-reliance.',
+      content: 'Providing practical and market-relevant vocational skills that promote employability, entrepreneurship, and financial independence. Training initiatives focus on digital literacy, artisanal crafts, tailoring, technical trades, and vocational apprenticeships designed specifically for unemployed youth and women in Ghana.',
+      image_url: 'assets/images/program_skills.jpg',
+      metadata: { target_page: 'programs', page: 'programs', target_section: 'Pillar 03: Skills Acquisition', section_key: 'programs.skills' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-01T09:00:00Z').toISOString()
+    },
+    {
+      id: 'default-prog-p4',
+      content_type: 'activity',
+      title: 'Pillar 04: Livelihood & Economic Empowerment',
+      summary: 'Supporting individuals to develop sustainable income-generating activities.',
+      content: 'Supporting individuals and vulnerable households to develop sustainable income-generating activities and improve their living conditions. We provide enterprise toolkits, cooperative support, and practical financial guidance, with special focus on women and young entrepreneurs.',
+      image_url: 'assets/images/program_women.jpg',
+      metadata: { target_page: 'programs', page: 'programs', target_section: 'Pillar 04: Economic Empowerment', section_key: 'programs.livelihood' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-01T09:30:00Z').toISOString()
+    },
+    {
+      id: 'default-prog-p5',
+      content_type: 'activity',
+      title: 'Pillar 05: Community Development',
+      summary: 'Identifying community needs and implementing interventions that promote social welfare.',
+      content: 'Identifying community needs and implementing responsive interventions that promote social welfare, community empowerment, and sustainable community development in Ghana. We collaborate with community leaders, local volunteers, and families.',
+      image_url: 'assets/images/program_community.jpg',
+      metadata: { target_page: 'programs', page: 'programs', target_section: 'Pillar 05: Community Development', section_key: 'programs.community' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-01T10:00:00Z').toISOString()
+    },
+
+    // BLOG PAGE
+    {
+      id: 'default-blog-hero',
+      content_type: 'website_content',
+      title: 'Stories of Impact & Community Insights',
+      summary: 'Blog & News Hero Tagline',
+      content: 'Stay informed on the latest community development milestones, field reports, and educational achievements from Project Elevate Foundation in Ghana.',
+      image_url: '',
+      metadata: { target_page: 'blog', page: 'blog', target_section: 'Hero Banner', section_key: 'blog.hero' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-15T08:30:00Z').toISOString()
     },
     {
       id: 'default-blog-1',
       content_type: 'publication',
       title: 'Empowering the Next Generation: A Guide to Youth Mentorship',
       summary: 'Foundation cornerstone book by TOBI Jane Davidson.',
-      content: 'A comprehensive handbook outlining proven frameworks for mentoring vulnerable youth.',
+      content: 'A comprehensive handbook outlining proven frameworks for mentoring vulnerable youth and accelerating community development in Ghana.',
       image_url: 'assets/images/book-release.jpg',
-      metadata: { target_page: 'blog', page: 'blog', target_section: 'Featured Book', author: 'TOBI Jane Davidson', release_date: 'April 2026' },
+      metadata: { target_page: 'blog', page: 'blog', target_section: 'Featured Book', section_key: 'blog.featured', author: 'TOBI Jane Davidson', release_date: 'April 2026' },
       status: 'APPROVED',
       created_at: new Date('2026-02-15T09:00:00Z').toISOString()
     },
+
+    // VOLUNTEER PAGE
     {
-      id: 'default-vol-1',
+      id: 'default-vol-hero',
       content_type: 'website_content',
-      title: 'Volunteer Tutors & Career Mentors Cohort 2026',
-      summary: 'Recruitment for weekend educational tutors and youth mentors.',
-      content: 'We welcome passionate educators ready to guide young students in basic mathematics and literacy.',
+      title: 'Volunteer with Project Elevate Foundation',
+      summary: 'Volunteer Hero Tagline & Introduction',
+      content: 'Contribute your time, skills, and energy to support community development and social support in Ghana.',
+      image_url: '',
+      metadata: { target_page: 'volunteer', page: 'volunteer', target_section: 'Hero Banner', section_key: 'volunteer.hero' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-20T09:30:00Z').toISOString()
+    },
+    {
+      id: 'default-vol-why',
+      content_type: 'website_content',
+      title: 'Empower Communities, Transform Lives',
+      summary: 'Why Volunteer With Project Elevate Foundation',
+      content: 'Whether you are in Ghana or abroad, your dedication makes a meaningful difference in the lives of youth and families. Gain practical leadership, teaching, project coordination, and teamwork experience while directly advancing grassroots community empowerment.',
+      image_url: '',
+      metadata: { target_page: 'volunteer', page: 'volunteer', target_section: 'Why Volunteer', section_key: 'volunteer.why' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-20T09:45:00Z').toISOString()
+    },
+    {
+      id: 'default-vol-roles',
+      content_type: 'website_content',
+      title: 'Volunteer Roles & Opportunities',
+      summary: 'Education, Mentorship, Vocational Training & Community Outreach',
+      content: '1. Educational Tutor: Teach literacy, mathematics, and science to primary and junior high pupils.\n2. Youth Mentor: Provide career coaching and personal development guidance to young adults.\n3. Vocational Instructor: Teach artisanal crafts, tailoring, technical trades, and digital skills.\n4. Community Outreach Coordinator: Organize grassroots field logistics and community assessments.',
       image_url: 'assets/images/program_youth.jpg',
-      metadata: { target_page: 'volunteer', page: 'volunteer', target_section: 'Volunteer Cohort Call' },
+      metadata: { target_page: 'volunteer', page: 'volunteer', target_section: 'Volunteer Roles', section_key: 'volunteer.roles' },
       status: 'APPROVED',
       created_at: new Date('2026-02-20T10:00:00Z').toISOString()
     },
+
+    // CONTACT PAGE
     {
-      id: 'default-contact-1',
+      id: 'default-contact-hero',
       content_type: 'website_content',
-      title: 'Main Office Contact & Operating Schedule',
-      summary: 'Official contact phone: +233 20 949 4119. Mon - Fri 8:00 AM - 5:00 PM GMT.',
-      content: 'Call +233 20 949 4119 or email info@projectelevatefoundation.org for inquiries and partnerships.',
+      title: 'Connect with Project Elevate Foundation',
+      summary: 'Contact Hero Tagline & Introduction',
+      content: 'Reach out to our team in Ghana for community partnerships, volunteer opportunities, donor inquiries, or social support assistance.',
       image_url: '',
-      metadata: { target_page: 'contact', page: 'contact', target_section: 'Contact Information' },
+      metadata: { target_page: 'contact', page: 'contact', target_section: 'Hero Banner', section_key: 'contact.hero' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-22T10:30:00Z').toISOString()
+    },
+    {
+      id: 'default-contact-info',
+      content_type: 'website_content',
+      title: 'Office Location & Operating Schedule',
+      summary: 'Kwame Nkrumah Avenue, Accra, Ghana · Mon–Fri, 8am–5pm GMT',
+      content: 'Address: Kwame Nkrumah Avenue, Accra, Ghana\nPhone: +233 20 949 4119\nEmail: info@projectelevatefoundation.org\nHours: Monday to Friday, 8:00 AM – 5:00 PM GMT',
+      image_url: '',
+      metadata: { target_page: 'contact', page: 'contact', target_section: 'Contact Information', section_key: 'contact.info' },
       status: 'APPROVED',
       created_at: new Date('2026-02-22T11:00:00Z').toISOString()
     },
     {
-      id: 'default-donate-1',
+      id: 'default-contact-faq',
       content_type: 'website_content',
-      title: 'Sponsor a Classroom & School Supply Kits',
-      summary: 'Support underserved classrooms with curriculum books and desks.',
-      content: 'Your financial donation provides exercise books, mathematical sets, and learning aids directly to underprivileged pupils.',
+      title: 'Inquiries & Community Support FAQs',
+      summary: 'Answers to common partnership and community support questions',
+      content: 'We welcome partnerships with educational institutions, community leaders, donors, and non-profits. For direct assistance or inquiries, reach out through our contact form or official telephone lines.',
+      image_url: '',
+      metadata: { target_page: 'contact', page: 'contact', target_section: 'Support & FAQs', section_key: 'contact.faq' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-22T11:30:00Z').toISOString()
+    },
+
+    // DONATE PAGE
+    {
+      id: 'default-donate-hero',
+      content_type: 'website_content',
+      title: 'Support Our Community Work in Ghana',
+      summary: 'Donate Hero Tagline & Introduction',
+      content: 'Your contribution directly aids community development, social support, and educational empowerment across Ghana.',
+      image_url: '',
+      metadata: { target_page: 'donate', page: 'donate', target_section: 'Hero Banner', section_key: 'donate.hero' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-25T13:30:00Z').toISOString()
+    },
+    {
+      id: 'default-donate-tiers',
+      content_type: 'website_content',
+      title: 'Where Your Donation Goes (Impact Tiers)',
+      summary: 'Classroom kits, Vocational training, School uniforms, Community outreach',
+      content: 'GH₵100: Supplies essential learning materials and exercise books to 2 students.\nGH₵250: Provides comprehensive classroom kits and school uniform assistance.\nGH₵500: Sponsors full vocational skills training and toolkits for a young person.\nGH₵1,000+: Supports grassroots school infrastructure upgrades and community water drives.',
       image_url: 'assets/images/program_education.jpg',
-      metadata: { target_page: 'donate', page: 'donate', target_section: 'Featured Appeal' },
+      metadata: { target_page: 'donate', page: 'donate', target_section: 'Donation Impact Tiers', section_key: 'donate.tiers' },
       status: 'APPROVED',
       created_at: new Date('2026-02-25T14:00:00Z').toISOString()
+    },
+    {
+      id: 'default-donate-instructions',
+      content_type: 'website_content',
+      title: 'Payment & Transfer Information',
+      summary: 'Paystack (Credit/Debit Card & Mobile Money) · Direct Bank Transfer',
+      content: 'We accept secure payments online via Paystack supporting MTN Mobile Money, Vodafone Cash, AirtelTigo Money, and Visa/Mastercard. For direct wire transfers or corporate sponsorship inquiries, contact info@projectelevatefoundation.org.',
+      image_url: '',
+      metadata: { target_page: 'donate', page: 'donate', target_section: 'Payment Methods', section_key: 'donate.instructions' },
+      status: 'APPROVED',
+      created_at: new Date('2026-02-25T14:30:00Z').toISOString()
     }
   ];
 
@@ -782,8 +991,16 @@
         });
       }
 
-      state.contacts = mergedContacts;
-      state.volunteers = mergedVolunteers;
+      // Read deleted engagement IDs
+      let deletedContactIds = new Set();
+      let deletedVolunteerIds = new Set();
+      try {
+        deletedContactIds = new Set(JSON.parse(localStorage.getItem('elevate_deleted_contact_ids') || '[]'));
+        deletedVolunteerIds = new Set(JSON.parse(localStorage.getItem('elevate_deleted_volunteer_ids') || '[]'));
+      } catch (_) {}
+
+      state.contacts = mergedContacts.filter(c => !deletedContactIds.has(String(c.id)) && !deletedContactIds.has(`${c.email}_${c.message || ''}`));
+      state.volunteers = mergedVolunteers.filter(v => !deletedVolunteerIds.has(String(v.id)) && !deletedVolunteerIds.has(`${v.email}_${v.bio || ''}`));
 
       // 4. Sensitive Financial records (Super Admin only)
       if (state.role === 'super_admin') {
@@ -993,15 +1210,24 @@
     removeLocalCustomSubmission(String(id));
     state.submissions = state.submissions.filter(s => String(s.id) !== String(id));
 
-    if (!String(id).startsWith('default-')) {
-      try {
+    try {
+      if (!String(id).startsWith('default-')) {
         await supabase
           .from('content_submissions')
           .delete()
           .eq('id', id);
-      } catch (err) {
-        console.warn('Supabase delete notice:', err.message);
       }
+      await supabase
+        .from('content_submissions')
+        .insert({
+          title: `[DELETED] ${id}`,
+          content_type: 'tombstone',
+          status: 'DELETED',
+          summary: String(id),
+          metadata: { deleted_id: String(id), target_page: item.metadata?.target_page || 'about' }
+        });
+    } catch (err) {
+      console.warn('Supabase delete/tombstone notice:', err.message);
     }
 
     await logAction('CONTENT_DELETED', 'content', id, `Deleted About Us item "${item.title}"`);
@@ -1297,10 +1523,15 @@
               <td style="font-size:0.83rem;color:#475569;max-width:240px;line-height:1.4;">${previewMsg}</td>
               <td style="white-space:nowrap;font-size:0.8rem;color:#64748b;">${formatDate(item.created_at)}</td>
               <td>${statusBadge(item.status)}</td>
-              <td style="text-align:right;">
-                <button class="btn-action-sm btn-action-view" onclick="window.viewEngagementMessage('${item.id}', '${item.sourceType}')">
-                  👁️ View Message
-                </button>
+              <td style="text-align:right;white-space:nowrap;">
+                <div class="table-actions" style="justify-content:flex-end;">
+                  <button class="btn-action-sm btn-action-view" onclick="window.viewEngagementMessage('${item.id}', '${item.sourceType}')" title="View Message Details">
+                    👁️ View
+                  </button>
+                  <button class="btn-action-sm btn-action-delete" onclick="window.deleteEngagementMessage('${item.id}', '${item.sourceType}')" title="Permanently Delete Message">
+                    🗑️ Delete
+                  </button>
+                </div>
               </td>
             </tr>
           `;
@@ -1328,10 +1559,15 @@
               <td>${escapeHtml(v.availability || 'Flexible')}</td>
               <td style="white-space:nowrap;font-size:0.8rem;color:#64748b;">${formatDate(v.created_at)}</td>
               <td>${statusBadge(v.status || 'pending')}</td>
-              <td style="text-align:right;">
-                <button class="btn-action-sm btn-action-view" onclick="window.viewEngagementMessage('${v.id}', 'volunteer')">
-                  👁️ View Application
-                </button>
+              <td style="text-align:right;white-space:nowrap;">
+                <div class="table-actions" style="justify-content:flex-end;">
+                  <button class="btn-action-sm btn-action-view" onclick="window.viewEngagementMessage('${v.id}', 'volunteer')" title="View Application Details">
+                    👁️ View
+                  </button>
+                  <button class="btn-action-sm btn-action-delete" onclick="window.deleteEngagementMessage('${v.id}', 'volunteer')" title="Permanently Delete Application">
+                    🗑️ Delete
+                  </button>
+                </div>
               </td>
             </tr>
           `).join('');
@@ -1387,6 +1623,7 @@
   };
 
   window.viewEngagementMessage = function (id, sourceType) {
+    state.currentViewingEngagement = { id, sourceType };
     const contactModal = document.getElementById('contact-view-modal');
     if (!contactModal) return;
 
@@ -1474,7 +1711,87 @@
   };
 
   window.closeContactModal = function () {
+    state.currentViewingEngagement = null;
     document.getElementById('contact-view-modal')?.classList.remove('is-open');
+  };
+
+  window.deleteEngagementMessage = async function (id, sourceType) {
+    const isVol = sourceType === 'volunteer';
+    const list = isVol ? (state.volunteers || []) : (state.contacts || []);
+    const item = list.find(x => String(x.id) === String(id));
+    const name = item ? (isVol ? `${item.first_name || ''} ${item.last_name || ''}`.trim() : item.name) : 'this visitor';
+
+    const confirmed = confirm(
+      `⚠️ PERMANENT DELETION CONFIRMATION\n\nAre you sure you want to permanently delete this ${isVol ? 'volunteer application' : 'contact message'} from:\n"${name}"?\n\nThis cannot be undone.`
+    );
+    if (!confirmed) return;
+
+    try {
+      // 1. Delete from Supabase if not a mock sample item
+      if (supabase && !String(id).startsWith('sample-')) {
+        const table = isVol ? 'volunteer_applications' : 'contact_messages';
+        try {
+          const { error } = await supabase
+            .from(table)
+            .delete()
+            .eq('id', id);
+          if (error) {
+            console.warn(`Supabase ${table} delete notice:`, error.message);
+          }
+        } catch (dbErr) {
+          console.warn(`Supabase ${table} delete caught:`, dbErr.message);
+        }
+      }
+
+      // 2. Remove from in-memory state
+      if (isVol) {
+        state.volunteers = (state.volunteers || []).filter(v => String(v.id) !== String(id));
+      } else {
+        state.contacts = (state.contacts || []).filter(c => String(c.id) !== String(id));
+      }
+
+      // 3. Update localStorage offline storage
+      const storageKey = isVol ? 'elevate_local_volunteers' : 'elevate_local_contacts';
+      try {
+        const existing = JSON.parse(localStorage.getItem(storageKey) || '[]');
+        const updated = existing.filter(x => String(x.id) !== String(id) && !(x.email === item?.email && (x.message === item?.message || x.bio === item?.bio)));
+        localStorage.setItem(storageKey, JSON.stringify(updated));
+      } catch (_) {}
+
+      // 4. Remember deleted ID in deleted set so sample/cached items do not re-appear
+      const deletedStorageKey = isVol ? 'elevate_deleted_volunteer_ids' : 'elevate_deleted_contact_ids';
+      try {
+        const delSet = new Set(JSON.parse(localStorage.getItem(deletedStorageKey) || '[]'));
+        delSet.add(String(id));
+        if (item?.email) delSet.add(`${item.email}_${(isVol ? item.bio : item.message) || ''}`);
+        localStorage.setItem(deletedStorageKey, JSON.stringify(Array.from(delSet)));
+      } catch (_) {}
+
+      // 5. Log action
+      await logAction(
+        isVol ? 'VOLUNTEER_DELETED' : 'CONTACT_DELETED',
+        isVol ? 'volunteers' : 'contacts',
+        id,
+        `Deleted ${isVol ? 'volunteer application' : 'contact message'} from ${name}`
+      );
+
+      // 6. Close view modal if it was open for this message
+      window.closeContactModal();
+
+      // 7. Refresh tables & counters
+      renderEngagementTables();
+      updateStats();
+
+      alert(`🗑️ ${isVol ? 'Volunteer application' : 'Contact message'} from "${name}" has been permanently deleted.`);
+    } catch (err) {
+      alert('Error deleting message: ' + (err.message || err));
+    }
+  };
+
+  window.deleteCurrentEngagementMessage = function () {
+    if (!state.currentViewingEngagement) return;
+    const { id, sourceType } = state.currentViewingEngagement;
+    window.deleteEngagementMessage(id, sourceType);
   };
 
   window.exportUnifiedMessages = function () {
@@ -1870,6 +2187,12 @@
         if (oldDefItem && oldDefItem.metadata?.section_key) {
           metadata.section_key = oldDefItem.metadata.section_key;
         }
+        if (oldDefItem && oldDefItem.metadata?.team_id) {
+          metadata.team_id = oldDefItem.metadata.team_id;
+        }
+        if (oldDefItem && oldDefItem.metadata?.avatar_icon) {
+          metadata.avatar_icon = oldDefItem.metadata.avatar_icon;
+        }
         if (state.editingSubmissionId && String(state.editingSubmissionId).startsWith('default-')) {
           state.deletedItemIds.add(state.editingSubmissionId);
           saveLocalDeletedId(state.editingSubmissionId);
@@ -1990,15 +2313,24 @@
       removeLocalCustomSubmission(String(id));
       state.submissions = state.submissions.filter(s => String(s.id) !== String(id));
 
-      if (!String(id).startsWith('default-')) {
-        try {
+      try {
+        if (!String(id).startsWith('default-')) {
           await supabase
             .from('content_submissions')
             .delete()
             .eq('id', id);
-        } catch (e) {
-          console.warn('Supabase delete notice:', e.message);
         }
+        await supabase
+          .from('content_submissions')
+          .insert({
+            title: `[DELETED] ${id}`,
+            content_type: 'tombstone',
+            status: 'DELETED',
+            summary: String(id),
+            metadata: { deleted_id: String(id), target_page: item.metadata?.target_page || 'about' }
+          });
+      } catch (e) {
+        console.warn('Supabase delete/tombstone notice:', e.message);
       }
 
       await logAction('CONTENT_DELETED', 'content', id, `Deleted "${item.title}"`);

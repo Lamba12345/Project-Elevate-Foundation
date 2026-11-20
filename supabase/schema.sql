@@ -79,7 +79,7 @@ create table if not exists public.user_roles (
   user_id uuid references auth.users (id) on delete cascade,
   email text not null unique,
   full_name text not null default '',
-  role text not null check (role in ('super_admin', 'manager')),
+  role text not null check (role in ('super_admin', 'admin', 'manager')),
   is_active boolean not null default true,
   can_manage_activities boolean not null default true,
   can_manage_events boolean not null default true,
@@ -224,7 +224,7 @@ begin
     from public.user_roles
     where ((user_id is not null and user_id = _uid)
            or (_email <> '' and lower(trim(email)) = _email))
-      and role = 'manager'
+      and role in ('manager', 'admin')
       and is_active = true
   );
 end;
@@ -267,7 +267,7 @@ begin
     from public.user_roles ur
     where ((ur.user_id is not null and ur.user_id = _uid)
            or (_email <> '' and lower(trim(ur.email)) = _email))
-      and ur.role = 'manager'
+      and ur.role in ('manager', 'admin')
       and ur.is_active = true
       and (
         (ctype = 'activity' and ur.can_manage_activities = true) or
@@ -420,26 +420,28 @@ alter table public.user_roles enable row level security;
 alter table public.content_submissions enable row level security;
 alter table public.activity_logs enable row level security;
 
--- 7.1 Sensitive Admin Tables: SUPER ADMIN ONLY (Protected from Manager)
+-- 7.1 Public Inquiries & Visitor Messages (Shared: Super Admin & Content Manager)
 drop policy if exists "Admins can read contact messages" on public.contact_messages;
-create policy "Admins can read contact messages"
+drop policy if exists "Staff can read contact messages" on public.contact_messages;
+create policy "Staff can read contact messages"
   on public.contact_messages for select to authenticated
-  using (public.is_super_admin());
+  using (true);
 
 drop policy if exists "Public can submit contact messages" on public.contact_messages;
 create policy "Public can submit contact messages"
   on public.contact_messages for insert to anon, authenticated
-  with check (status = 'new');
+  with check (true);
 
 drop policy if exists "Admins can read volunteer applications" on public.volunteer_applications;
-create policy "Admins can read volunteer applications"
+drop policy if exists "Staff can read volunteer applications" on public.volunteer_applications;
+create policy "Staff can read volunteer applications"
   on public.volunteer_applications for select to authenticated
-  using (public.is_super_admin());
+  using (true);
 
 drop policy if exists "Public can submit volunteer applications" on public.volunteer_applications;
 create policy "Public can submit volunteer applications"
   on public.volunteer_applications for insert to anon, authenticated
-  with check (status = 'pending');
+  with check (true);
 
 drop policy if exists "Admins can read donations" on public.donations;
 create policy "Admins can read donations"

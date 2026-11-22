@@ -91,7 +91,7 @@
                 .from('user_roles')
                 .update({ user_id: user.id })
                 .eq('id', byEmail.id);
-            } catch (_) {}
+            } catch (_) { }
           }
         }
       } catch (e) {
